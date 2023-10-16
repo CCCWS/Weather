@@ -14,10 +14,24 @@ const Graph = ({ weeklyWeather }: GraphProps) => {
     <Div>
       {weeklyWeather.daily.map((data: any, index: number) => (
         <WeatherList key={index}>
-          {new Date((data.dt + timezone_offset) * 1000).toLocaleDateString([], {
-            timeZone: "UTC",
-            weekday: "long",
-          })}
+          <Day>
+            {new Date((data.dt + timezone_offset) * 1000).toLocaleDateString(
+              [],
+              {
+                timeZone: "UTC",
+                weekday: "long",
+              }
+            )}
+          </Day>
+
+          <Humidity ratio={data.humidity}>{`${data.humidity}%`}</Humidity>
+
+          <Img
+            url={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+          />
+          <Temp>
+            {`${Math.floor(data.temp.max)}° ${Math.floor(data.temp.min)}°`}
+          </Temp>
         </WeatherList>
       ))}
     </Div>
@@ -27,14 +41,78 @@ const Graph = ({ weeklyWeather }: GraphProps) => {
 const Div = styled.div`
   background-color: #8b8b8b42;
 
-  /* backdrop-filter: blur(20px); */
-
   width: 100%;
-  /* height: 2000px; */
 
   border-radius: 30px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0px 0px;
+
+  overflow: hidden;
 `;
 
-const WeatherList = styled.div``;
+const WeatherList = styled.div`
+  width: 100%;
+  height: 100px;
+  padding: 20px;
+
+  /* background-color: red; */
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+`;
+
+const Day = styled.div`
+  width: 30%;
+`;
+
+const Humidity = styled.div<{ ratio: number }>`
+  color: gray;
+  position: relative;
+  width: 15%;
+  height: 60%;
+
+  display: flex;
+  align-items: center;
+
+  text-align: left;
+
+  &::before {
+    content: "";
+    width: 7px;
+    height: 100%;
+    background-color: #e2f3fd;
+    border: 1px solid gray;
+    position: absolute;
+    left: -15px;
+    border-radius: 10px;
+  }
+
+  &::after {
+    content: "";
+    width: 7px;
+    height: ${(props) => `${props.ratio}%`};
+    background-color: #56c1ff;
+    position: absolute;
+    left: -14px;
+    bottom: 0px;
+    overflow: hidden;
+    border-radius: 0px 0px 10px 10px;
+  }
+`;
+
+const Temp = styled.div``;
+
+const Img = styled.div<{ url: string }>`
+  width: 100px;
+  height: 100%;
+
+  background: ${(props) => `url(${props.url})`};
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
 
 export default Graph;

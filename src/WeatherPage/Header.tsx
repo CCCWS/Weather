@@ -34,7 +34,7 @@ const Header = ({
 };
 
 const Div = styled.div`
-  background-color: transparent;
+  background-color: #8b8b8b42;
 
   width: 100%;
   height: 300px;
@@ -51,7 +51,7 @@ const Info = styled.div`
   width: 50%;
   height: 100%;
 
-  background-color: red;
+  /* background-color: red; */
 
   display: flex;
   justify-content: center;
