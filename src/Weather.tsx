@@ -3,8 +3,8 @@ import styled from "styled-components";
 import axios from "axios";
 
 import Header from "./WeatherPage/Header";
-import Graph from "./WeatherPage/Graph";
-import WeatherList from "./WeatherPage/WeatherList";
+import WeekForecast from "./WeatherPage/WeekForecast";
+import WeatherChart from "./WeatherPage/WeatherChart";
 import Comment from "./WeatherPage/Comment";
 import InfoBox from "./WeatherPage/InfoBox";
 import Map from "./WeatherPage/Map";
@@ -18,6 +18,7 @@ const WEATHER_URL = "https://api.openweathermap.org/data/2.5/";
 const Weather = () => {
   const [weatherInfo, setWeatherInfo] = useState<any>();
   const [weatherForecast, setWeatherForcast] = useState<any>();
+ 
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(async function (pos) {
@@ -79,9 +80,9 @@ const Weather = () => {
             tempMax={Math.floor(weatherInfo.main.temp_max)}
             tempFeelsLike={Math.floor(weatherInfo.main.feels_like)}
           />
-          <Graph weeklyWeather={weatherForecast} />
+          <WeekForecast weeklyWeather={weatherForecast} />
+          <WeatherChart />
           <Comment />
-          <WeatherList />
           <InfoBox />
           <Map />
           <TodayStory />
@@ -111,7 +112,7 @@ const Img = styled.div<{ url: string }>`
 const Div = styled.div`
   width: 100vw;
   min-height: 100vh;
-  background-color: white;
+  background-color: #ffffff7a;
 
   overflow-y: scroll;
   overflow: overlay;

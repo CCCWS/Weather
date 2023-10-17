@@ -23,10 +23,15 @@ const Header = ({
   return (
     <Div>
       <Info>
-        <div>{temp}°</div>
-        <div>{weatherState}</div>
-        <div>{city}</div>
-        <div>{`${tempMax}° / ${tempMin}° 체감온도 ${tempFeelsLike}°`}</div>
+        <Top>
+          <div>{temp}°</div>
+          <div>{weatherState}</div>
+        </Top>
+
+        <Bottom>
+          <div>{city}</div>
+          <div>{`${tempMax}° / ${tempMin}° 체감온도 ${tempFeelsLike}°`}</div>
+        </Bottom>
       </Info>
       <Img url={`http://openweathermap.org/img/wn/${weatherIcon}@2x.png`} />
     </Div>
@@ -34,13 +39,10 @@ const Header = ({
 };
 
 const Div = styled.div`
-  background-color: #8b8b8b42;
-
   width: 100%;
-  height: 300px;
+  height: 250px;
 
   border-radius: 30px;
-  border: 1px solid red;
 
   display: flex;
 
@@ -53,10 +55,28 @@ const Info = styled.div`
 
   /* background-color: red; */
 
+  padding: 30px;
+
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-evenly;
+  align-items: right;
   flex-direction: column;
+`;
+
+const InfoDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px 0px;
+`;
+const Top = styled(InfoDiv)`
+  & > :first-child {
+    font-size: 2.5rem;
+  }
+`;
+const Bottom = styled(InfoDiv)`
+  & > :first-child {
+    font-size: 1.5rem;
+  }
 `;
 
 const Img = styled.div<{ url: string }>`

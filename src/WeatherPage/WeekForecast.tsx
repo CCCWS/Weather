@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-interface GraphProps {
+interface WeekForecastProps {
   weeklyWeather: any;
 }
 
-const Graph = ({ weeklyWeather }: GraphProps) => {
+const WeekForecast = ({ weeklyWeather }: WeekForecastProps) => {
   console.log(weeklyWeather);
 
   const timezone_offset = 32400;
@@ -115,4 +115,4 @@ const Img = styled.div<{ url: string }>`
   background-size: cover;
 `;
 
-export default Graph;
+export default WeekForecast;
