@@ -17,17 +17,27 @@ const WeatherChart = () => {
     { temp: 1, x1: "100", x2: "150", y1: "15%", y2: "1%" },
     { temp: 10, x1: "150", x2: "200", y1: "1%", y2: "10%" },
   ];
+
+  const chartDataY: number[] = [80, 75, 62, 85, 55, 90, 78, 20, 74, 90];
+  const chartDataX: number[] = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450];
+
   return (
     <Div>
       <Svg>
-        {temp.map((data, index) => (
-          <Line
-            x1={data.x1}
-            x2={data.x2}
-            y1={data.y1}
-            y2={data.y2}
-            key={index}
-          ></Line>
+        {chartDataY.map((data, index) => (
+          <>
+            {index === chartDataY.length - 1 ? (
+              <></>
+            ) : (
+              <Line
+                x1={chartDataX[index]}
+                x2={chartDataX[index + 1]}
+                y1={chartDataY[index]}
+                y2={chartDataY[index + 1]}
+                key={index}
+              ></Line>
+            )}
+          </>
         ))}
       </Svg>
     </Div>
@@ -51,9 +61,9 @@ const Svg = styled.svg`
 `;
 
 const Line = styled.line`
+  fill: none;
   stroke: rgb(255, 0, 0);
   stroke-width: 3;
-  
 `;
 
 export default WeatherChart;

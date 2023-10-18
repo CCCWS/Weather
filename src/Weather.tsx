@@ -12,13 +12,14 @@ import TodayStory from "./WeatherPage/TodayStory";
 import Video from "./WeatherPage/Video";
 import MenuBox from "./WeatherPage/MenuBox";
 
+import TestChart from "./WeatherPage/TestChart";
+
 const API_KEY = "b5ca0b1f1b1ff2ccea56184d385df768";
 const WEATHER_URL = "https://api.openweathermap.org/data/2.5/";
 
 const Weather = () => {
   const [weatherInfo, setWeatherInfo] = useState<any>();
   const [weatherForecast, setWeatherForcast] = useState<any>();
- 
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(async function (pos) {
@@ -90,7 +91,10 @@ const Weather = () => {
           <MenuBox />
         </>
       ) : (
-        <div>로딩중</div>
+        <>
+          <TestChart />
+          {/* <div>로딩중</div> */}
+        </>
       )}
 
       {/* {weatherInfo && (
