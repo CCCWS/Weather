@@ -19,23 +19,36 @@ const WEATHER_URL = "https://api.openweathermap.org/data/2.5/";
 
 const Weather = () => {
   const [weatherInfo, setWeatherInfo] = useState<any>();
-  const [weatherForecast, setWeatherForcast] = useState<any>();
+  const [weatherForecastWeek, setWeatherForcastWeek] = useState<any>();
+  const [weatherForecastHour, setWeatherForcastHour] = useState<any>();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(async function (pos) {
       const latitude = pos.coords.latitude;
       const longitude = pos.coords.longitude;
 
-      // const location = `lat=${latitude}&lon=${longitude}&appid=${API_KEY}&lang=kr&units=metric`;
+      const location = `lat=${latitude}&lon=${longitude}&appid=${API_KEY}&lang=kr&units=metric`;
 
-      // const res = await axios.get(`${WEATHER_URL}weather?${location}`);
+      const weatherToday = await axios.get(`${WEATHER_URL}weather?${location}`);
 
-      // const test = await axios.get(
-      //   `${WEATHER_URL}onecall?&exclude=current,minutely,hourly,alerts&${location}`
-      // );
+      const weatherForecastWeek = await axios.get(
+        `${WEATHER_URL}onecall?&exclude=current,minutely,alerts&${location}`
+      );
 
-      // setWeatherInfo(res.data);
-      // setWeatherForcast(test.data);
+      const weatherForecastHour = await axios.get(
+        `${WEATHER_URL}forecast?&${location}`
+      );
+
+      // console.log(test);
+
+      // test.data.hourly.map((data: any) => {
+      //   const date = new Date((data.dt + test.data.timezone_offset) * 1000);
+      //   console.log(date);
+      // });
+
+      setWeatherInfo(weatherToday.data);
+      setWeatherForcastWeek(weatherForecastWeek.data);
+      setWeatherForcastHour(weatherForecastHour.data);
 
       // console.log(Math.floor(res.data.main.temp - 273.15));
       // console.log(res.data.weather[0].icon);
@@ -64,7 +77,7 @@ const Weather = () => {
         hour12: true,
       });
 
-      console.log(test);
+      // console.log(test);
     }
   }, [weatherInfo]);
 
@@ -72,7 +85,7 @@ const Weather = () => {
     <Div>
       {weatherInfo ? (
         <>
-          <Header
+          {/* <Header
             city={weatherInfo.name}
             weatherIcon={weatherInfo.weather[0].icon}
             weatherState={weatherInfo.weather[0].description}
@@ -81,18 +94,19 @@ const Weather = () => {
             tempMax={Math.floor(weatherInfo.main.temp_max)}
             tempFeelsLike={Math.floor(weatherInfo.main.feels_like)}
           />
-          <WeekForecast weeklyWeather={weatherForecast} />
+          <WeekForecast forecastWeek={weatherForecastWeek} />
           <WeatherChart />
           <Comment />
           <InfoBox />
           <Map />
           <TodayStory />
           <Video />
-          <MenuBox />
+          <MenuBox /> */}
+          <TestChart forecastHour={weatherForecastHour} />
         </>
       ) : (
         <>
-          <TestChart />
+          <TestChart forecastHour={weatherForecastHour} />
           {/* <div>로딩중</div> */}
         </>
       )}

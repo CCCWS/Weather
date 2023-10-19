@@ -2,17 +2,17 @@ import React from "react";
 import styled from "styled-components";
 
 interface WeekForecastProps {
-  weeklyWeather: any;
+  forecastWeek: any;
 }
 
-const WeekForecast = ({ weeklyWeather }: WeekForecastProps) => {
-  console.log(weeklyWeather);
+const WeekForecast = ({ forecastWeek }: WeekForecastProps) => {
+  // console.log(forecastWeek);
 
   const timezone_offset = 32400;
 
   return (
     <Div>
-      {weeklyWeather.daily.map((data: any, index: number) => (
+      {forecastWeek.daily.map((data: any, index: number) => (
         <WeatherList key={index}>
           <Day>
             {new Date((data.dt + timezone_offset) * 1000).toLocaleDateString(
