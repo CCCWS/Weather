@@ -1,223 +1,126 @@
 import React from "react";
 import styled from "styled-components";
 
+interface tempType {
+  temp: number;
+  x1: string;
+  x2: string;
+  y1: string;
+  y2: string;
+}
+
 const TestChart = () => {
-  const arr: number[] = [1, 2, 3, 4, 5];
-  const chartDataY: number[] = [80, 75, 62, 85, 55, 90, 78, 20, 74, 90];
-  const chartDataX: number[] = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450];
+  const test = { color: "blue" };
+  const temp: tempType[] = [
+    { temp: 9, x1: "0", x2: "50", y1: "0", y2: "9%" },
+    { temp: 15, x1: "50", x2: "100", y1: "9%", y2: "15%" },
+    { temp: 1, x1: "100", x2: "150", y1: "15%", y2: "1%" },
+    { temp: 10, x1: "150", x2: "200", y1: "1%", y2: "10%" },
+  ];
+
+  const chartDataY: number[] = [
+    100, 75, 62, 85, 55, 90, 78, 20, 74, 90, 80, 75, 62, 85, 55, 90, 78,
+  ];
+  const chartDataX = Array.from(
+    { length: chartDataY.length },
+    (_, i) => i * 50
+  );
+  console.log(chartDataX);
 
   return (
-    <Graph>
-      <GraphInner>
-        <GraphUl>
-          {/* 그래프 point top 값 % 로 입력 0 ~ 100%  */}
+    <Div>
+      <ChartDiv>
+        <Svg chart_length={(chartDataY.length - 1) * 50}>
+          <>
+            {chartDataY.map((data, index) => (
+              <React.Fragment key={index}>
+                {index === chartDataY.length - 1 ? (
+                  <></>
+                ) : (
+                  <>
+                    <Line
+                      x1={chartDataX[index]}
+                      x2={chartDataX[index + 1]}
+                      y1={chartDataY[index]}
+                      y2={chartDataY[index + 1]}
+                    ></Line>
+                  </>
+                )}
+              </React.Fragment>
+            ))}
+          </>
+        </Svg>
 
-          {arr.map((data, index) => (
-            <GraphLi key={index}>
-              <GraphTitle>{data}</GraphTitle>
-              <GraphPoint aria-expanded="false">
-                <A11y>정확한 수치 보기</A11y>
-              </GraphPoint>
-              <GraphTip>
-                <strong></strong>
-              </GraphTip>
-            </GraphLi>
-          ))}
-
-          {chartDataY.map((data, index) => (
-            <GraphLine>
-              {/* x 값 : 57 간격으로 올라감 (예: 0, 57, 114, 171, 228, 285, 342, 399, 456, 513)
-          y 값 : button class="graph_point" top % 의 두배 수 (예: 10% -> 20)
-          적용 : points="x,y x,y ....." */}
-              <Svg height="216">
-                <Polyline
-                  x1={chartDataX[index]}
-                  x2={chartDataX[index + 1]}
-                  y1={chartDataY[index]}
-                  y2={chartDataY[index + 1]}
-                ></Polyline>
-              </Svg>
-            </GraphLine>
-          ))}
-        </GraphUl>
-      </GraphInner>
-    </Graph>
+        <InfoBox>
+          <div>
+            {chartDataY.map((data, index) => (
+              <Point key={index} left={chartDataX[index]} top={data}></Point>
+            ))}
+          </div>
+        </InfoBox>
+      </ChartDiv>
+    </Div>
   );
 };
 
-const Graph = styled.div`
-  padding-bottom: 30px;
+const Div = styled.div`
+  width: 100%;
+  height: 500px;
+  background-color: aqua;
+  overflow-x: scroll;
+
+  padding: 50px;
 `;
 
-const GraphInner = styled.div`
+const ChartDiv = styled.div`
   position: relative;
-  margin: 0 auto;
-  width: 600px;
-  height: 286px;
-  padding-bottom: 86px;
 `;
 
-const GraphUl = styled.ul`
-  position: relative;
-  z-index: 10;
+const Svg = styled.svg<{ chart_length: number }>`
+  min-width: 100%;
+  width: ${(props) => `${props.chart_length}px`};
+  height: 100px;
+  overflow-x: scroll;
+
+  background-color: white;
+
   display: flex;
-  align-items: flex-end;
-  padding: 0 15px;
-  height: 100%;
-  font-size: 0;
-  line-height: 0;
-  transform-origin: center;
-`;
-
-const GraphLi = styled.li`
-  position: relative;
-  display: inline-block;
-  width: 57px;
-  height: 200px;
-  box-sizing: border-box;
-
-  & > :before {
-    display: block;
-    content: "";
-    clear: both;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 6px;
-    height: 100%;
-    background-color: #f3f4f5;
-    border-radius: 6px;
-  }
-
-  @for $i from 1 through 10 {
-    &:nth-child(#{$i}) {
-      .graph_point {
-        animation-delay: (0.1 * $i) + s;
-      }
-    }
-  }
-`;
-
-const GraphTitle = styled.div`
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  bottom: -12px;
-  display: inline-block;
-  height: 20px;
-  line-height: 20px;
-  font-size: 16px;
-  font-weight: 700;
-  color: #666;
-  transform: translate(-20%, 100%);
-  text-align: center;
-`;
-
-const GraphPoint = styled.button`
-  position: absolute;
-  z-index: 1;
-  display: block;
-  margin: 0;
-  padding: 0;
-  width: 16px;
-  height: 16px;
-  border: 4px solid #6910ef;
-  background-color: #fff;
-  border-radius: 100%;
-  left: -5px;
-  cursor: pointer;
-  transform: scale(0);
-  animation: points 0.2s forwards;
-  & > * {
-    pointer-events: none;
-  }
-  &[aria-expanded="false"] + .graph_tip {
-    display: none;
-  }
-`;
-
-const A11y = styled.span`
-  position: absolute;
-  overflow: hidden;
-  height: 1px;
-  width: 1px;
-  border: 0;
-  clip: rect(1px, 1px, 1px, 1px);
-  clip-path: inset(50%);
-  word-break: initial;
-  word-wrap: initial;
-`;
-
-const GraphTip = styled.div`
-  position: absolute;
-  left: 3px;
-  top: -11px;
-  display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  width: 36px;
-  height: 22px;
-  border-radius: 4px;
-  background-color: #6910ef;
-  text-align: center;
-  transform: translate(-50%, -100%);
-  strong {
-    color: #fff;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1;
-  }
-  &:after {
-    display: block;
-    content: "";
-    clear: both;
-    position: absolute;
-    z-index: 11;
-    left: 12px;
-    bottom: -6px;
-    width: 0;
-    height: 0;
-    border: 6px solid transparent;
-    border-bottom-width: 0;
-    border-left-width: 5px;
-    border-right-width: 5px;
-    pointer-events: none;
-    border-top-color: #6910ef;
-  }
+  align-items: center;
 `;
 
-const GraphLine = styled.div`
-  position: absolute;
-  left: 11px;
-  top: 86px;
-  width: calc(100% - 12px);
-  height: 200px;
-  transform: scaleY(-1) scaleX(1);
-  transform-origin: center;
-`;
-const Svg = styled.svg`
-  height: 216px;
-  padding: 8px;
+const Line = styled.line`
   fill: none;
-  width: 0;
-  animation: polyline 2s forwards;
+  stroke: rgb(255, 0, 0);
+  stroke-width: 2;
+  position: relative;
 `;
 
-const Polyline = styled.line`
-  stroke: rgba(105, 16, 239, 0.2);
-  stroke-width: 4px;
+const InfoBox = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  position: absolute;
+  top: 0;
 
-  /* @keyframes polyline {
-    to {
-      width: 649px;
-    }
+  & > :first-child {
+    position: relative;
   }
+`;
 
-  @keyframes points {
-    to {
-      transform: scale(1);
-    }
-  } */
+const Point = styled.div<{ left: number; top: number }>`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #000000;
+
+  top: ${(props) => `calc(${props.top}px - 5px)`};
+  left: ${(props) => `calc(${props.left}px - 5px)`};
+
+  z-index: 10000;
+
+  position: absolute;
 `;
 
 export default TestChart;

@@ -26,16 +26,16 @@ const Weather = () => {
       const latitude = pos.coords.latitude;
       const longitude = pos.coords.longitude;
 
-      const location = `lat=${latitude}&lon=${longitude}&appid=${API_KEY}&lang=kr&units=metric`;
+      // const location = `lat=${latitude}&lon=${longitude}&appid=${API_KEY}&lang=kr&units=metric`;
 
-      const res = await axios.get(`${WEATHER_URL}weather?${location}`);
+      // const res = await axios.get(`${WEATHER_URL}weather?${location}`);
 
-      const test = await axios.get(
-        `${WEATHER_URL}onecall?&exclude=current,minutely,hourly,alerts&${location}`
-      );
+      // const test = await axios.get(
+      //   `${WEATHER_URL}onecall?&exclude=current,minutely,hourly,alerts&${location}`
+      // );
 
-      setWeatherInfo(res.data);
-      setWeatherForcast(test.data);
+      // setWeatherInfo(res.data);
+      // setWeatherForcast(test.data);
 
       // console.log(Math.floor(res.data.main.temp - 273.15));
       // console.log(res.data.weather[0].icon);

@@ -63,7 +63,7 @@ const Svg = styled.svg`
 const Line = styled.line`
   fill: none;
   stroke: rgb(255, 0, 0);
-  stroke-width: 3;
+  stroke-width: 2;
 `;
 
 export default WeatherChart;
