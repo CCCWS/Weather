@@ -12,6 +12,8 @@ import TodayStory from "./WeatherPage/TodayStory";
 import Video from "./WeatherPage/Video";
 import MenuBox from "./WeatherPage/MenuBox";
 
+import Test from "./WeatherPage/Test";
+
 import TestChart from "./WeatherPage/TestChart";
 
 const API_KEY = "b5ca0b1f1b1ff2ccea56184d385df768";
@@ -29,15 +31,15 @@ const Weather = () => {
 
       const location = `lat=${latitude}&lon=${longitude}&appid=${API_KEY}&lang=kr&units=metric`;
 
-      const weatherToday = await axios.get(`${WEATHER_URL}weather?${location}`);
+      // const weatherToday = await axios.get(`${WEATHER_URL}weather?${location}`);
 
-      const weatherForecastWeek = await axios.get(
-        `${WEATHER_URL}onecall?&exclude=current,minutely,alerts&${location}`
-      );
+      // const weatherForecastWeek = await axios.get(
+      //   `${WEATHER_URL}onecall?&exclude=current,minutely,alerts&${location}`
+      // );
 
-      const weatherForecastHour = await axios.get(
-        `${WEATHER_URL}forecast?&${location}`
-      );
+      // const weatherForecastHour = await axios.get(
+      //   `${WEATHER_URL}forecast?&${location}`
+      // );
 
       // console.log(test);
 
@@ -46,9 +48,12 @@ const Weather = () => {
       //   console.log(date);
       // });
 
-      setWeatherInfo(weatherToday.data);
-      setWeatherForcastWeek(weatherForecastWeek.data);
-      setWeatherForcastHour(weatherForecastHour.data);
+      const test = new Date();
+      console.log(test);
+
+      // setWeatherInfo(weatherToday.data);
+      // setWeatherForcastWeek(weatherForecastWeek.data);
+      // setWeatherForcastHour(weatherForecastHour.data);
 
       // console.log(Math.floor(res.data.main.temp - 273.15));
       // console.log(res.data.weather[0].icon);
@@ -106,7 +111,8 @@ const Weather = () => {
         </>
       ) : (
         <>
-          <TestChart forecastHour={weatherForecastHour} />
+          {/* <TestChart forecastHour={weatherForecastHour} /> */}
+          <Test />
           {/* <div>로딩중</div> */}
         </>
       )}

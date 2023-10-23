@@ -23,9 +23,6 @@ const TestChart = ({ forecastHour }: ChartType) => {
 
   useEffect(() => {
     if (forecastHour) {
-      const test: Date = new Date();
-      console.log(test);
-
       const temp: number[] = [];
 
       forecastHour.list.forEach((data: any) =>
@@ -147,7 +144,7 @@ const Point = styled.div<{ left: number; top: number }>`
   border-radius: 50%;
   background-color: black;
 
-  bottom: ${(props) => `calc(${props.top}px + 50%)`};
+  bottom: ${(props) => `calc(${props.top}px - 2px + 50%)`};
   left: ${(props) => `calc(${props.left}px - 5px)`};
 
   position: absolute;
