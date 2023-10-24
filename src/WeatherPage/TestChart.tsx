@@ -15,10 +15,9 @@ const TestChart = ({ forecastHour }: ChartType) => {
   // ];
 
   const [newForecast, setNewForecast] = useState<number[]>([]);
-
   const chartDataX = Array.from(
     { length: newForecast.length },
-    (_, i) => i * 50
+    (_, i) => i * 100
   );
 
   useEffect(() => {
@@ -39,7 +38,7 @@ const TestChart = ({ forecastHour }: ChartType) => {
 
   return (
     <Div>
-      <ChartDiv chart_length={(newForecast.length - 1) * 50}>
+      <ChartDiv chart_length={(newForecast.length - 1) * 100}>
         <Svg>
           <>
             {newForecast.map((data, index) => (
@@ -59,7 +58,7 @@ const TestChart = ({ forecastHour }: ChartType) => {
           </>
         </Svg>
 
-        <InfoBox chart_length={(newForecast.length - 1) * 50}>
+        <InfoBox chart_length={(newForecast.length - 1) * 100}>
           {newForecast.map((data: any, index) => (
             <React.Fragment key={index}>
               <Point key={index} left={chartDataX[index]} top={data}>
@@ -67,9 +66,10 @@ const TestChart = ({ forecastHour }: ChartType) => {
               </Point>
               {/* <Test>{index + 1}</Test> */}
 
-              <Date left={chartDataX[index]} top={data}>
-                {forecastHour.list[index].dt_txt}
-              </Date>
+              <DateDiv left={chartDataX[index]} top={data}>
+                {`${new Date(forecastHour.list[index].dt_txt).getDate()}일 /
+                ${new Date(forecastHour.list[index].dt_txt).getHours()}시`}
+              </DateDiv>
             </React.Fragment>
           ))}
         </InfoBox>
@@ -165,8 +165,8 @@ const Point = styled.div<{ left: number; top: number }>`
   }
 `;
 
-const Date = styled.div<{ left: number; top: number }>`
-  width: 100px;
+const DateDiv = styled.div<{ left: number; top: number }>`
+  width: 200px;
   height: 100px;
   /* border-radius: 50%; */
   /* background-color: black; */

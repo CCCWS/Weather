@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family : BMJUA;
     margin: 0;
-    overflow: overlay;
+    /* overflow: overlay; */
 }
 
 

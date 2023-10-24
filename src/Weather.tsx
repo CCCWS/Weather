@@ -31,35 +31,19 @@ const Weather = () => {
 
       const location = `lat=${latitude}&lon=${longitude}&appid=${API_KEY}&lang=kr&units=metric`;
 
-      // const weatherToday = await axios.get(`${WEATHER_URL}weather?${location}`);
+      const weatherToday = await axios.get(`${WEATHER_URL}weather?${location}`);
 
-      // const weatherForecastWeek = await axios.get(
-      //   `${WEATHER_URL}onecall?&exclude=current,minutely,alerts&${location}`
-      // );
+      const weatherForecastWeek = await axios.get(
+        `${WEATHER_URL}onecall?&exclude=current,minutely,alerts&${location}`
+      );
 
-      // const weatherForecastHour = await axios.get(
-      //   `${WEATHER_URL}forecast?&${location}`
-      // );
+      const weatherForecastHour = await axios.get(
+        `${WEATHER_URL}forecast?&${location}`
+      );
 
-      // console.log(test);
-
-      // test.data.hourly.map((data: any) => {
-      //   const date = new Date((data.dt + test.data.timezone_offset) * 1000);
-      //   console.log(date);
-      // });
-
-      const test = new Date();
-      console.log(test);
-
-      // setWeatherInfo(weatherToday.data);
-      // setWeatherForcastWeek(weatherForecastWeek.data);
-      // setWeatherForcastHour(weatherForecastHour.data);
-
-      // console.log(Math.floor(res.data.main.temp - 273.15));
-      // console.log(res.data.weather[0].icon);
-
-      // console.log(latitude, longitude);
-      // console.log(res.data.name);
+      setWeatherInfo(weatherToday.data);
+      setWeatherForcastWeek(weatherForecastWeek.data);
+      setWeatherForcastHour(weatherForecastHour.data);
     });
   }, []);
 
@@ -112,8 +96,8 @@ const Weather = () => {
       ) : (
         <>
           {/* <TestChart forecastHour={weatherForecastHour} /> */}
-          <Test />
-          {/* <div>로딩중</div> */}
+          {/* <Test /> */}
+          <div>로딩중</div>
         </>
       )}
 

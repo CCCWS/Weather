@@ -103,21 +103,23 @@ const Item = styled.div<{
   background-size: cover;
   background-repeat: no-repeat;
 
+  transition: 0.5s;
+
   transform: ${(props) => `translateY(-${props.curr_page}00%)
   `};
 
-  transition: 0.5s;
+  /* transition: ${(props) => (props.curr_page_check ? "0.5s" : "0s")}; */
   /* position: absolute; */
-
-  /* opacity: ${(props) => (props.curr_page_check ? 1 : 0.5)}; */
+  /* opacity: ${(props) => (props.curr_page_check ? 1 : 0)}; */
   /* z-index: ${(props) => (props.curr_page_check ? 1 : 0)}; */
 
   color: white;
 `;
 
 const Content = styled.div<{ delay: number; is_view: boolean }>`
-  transition: 1s;
-  transition-delay: ${(props) => `calc(${props.delay}s + 0.5s)`};
+  transition: ${(props) => (props.is_view ? "0.5s" : "0s")};
+  transition-delay: ${(props) =>
+    props.is_view ? `calc(${props.delay}s + 0.5s)` : "0s"};
   transform: ${(props) =>
     props.is_view ? "translateY(0px)" : "translateY(-10px)"};
   opacity: ${(props) => (props.is_view ? 1 : 0)};
