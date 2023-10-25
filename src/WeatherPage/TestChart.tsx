@@ -40,36 +40,40 @@ const TestChart = ({ forecastHour }: ChartType) => {
     <Div>
       <ChartDiv chart_length={(newForecast.length - 1) * 100}>
         <Svg>
-          <>
-            {newForecast.map((data, index) => (
-              <React.Fragment key={index}>
-                {index === newForecast.length - 1 ? (
-                  <></>
-                ) : (
-                  <Line
-                    x1={chartDataX[index]}
-                    x2={chartDataX[index + 1]}
-                    y1={newForecast[index]}
-                    y2={newForecast[index + 1]}
-                  ></Line>
-                )}
-              </React.Fragment>
-            ))}
-          </>
+          {newForecast.map((data, index) => (
+            <React.Fragment key={index}>
+              {index === newForecast.length - 1 ? (
+                <></>
+              ) : (
+                <Line
+                  x1={chartDataX[index]}
+                  x2={chartDataX[index + 1]}
+                  y1={newForecast[index]}
+                  y2={newForecast[index + 1]}
+                />
+              )}
+            </React.Fragment>
+          ))}
         </Svg>
 
-        <InfoBox chart_length={(newForecast.length - 1) * 100}>
+        <InfoBox>
           {newForecast.map((data: any, index) => (
             <React.Fragment key={index}>
-              <Point key={index} left={chartDataX[index]} top={data}>
-                <div />
-              </Point>
-              {/* <Test>{index + 1}</Test> */}
+              {index === newForecast.length - 1 ? (
+                <></>
+              ) : (
+                <>
+                  <Point key={index} left={chartDataX[index]} top={data}>
+                    <div />
+                  </Point>
 
-              <DateDiv left={chartDataX[index]} top={data}>
-                {`${new Date(forecastHour.list[index].dt_txt).getDate()}일 /
-                ${new Date(forecastHour.list[index].dt_txt).getHours()}시`}
-              </DateDiv>
+                  <DateDiv left={chartDataX[index]} top={data}>
+                    {`${new Date(
+                      forecastHour.list[index].dt_txt
+                    ).getHours()}시`}
+                  </DateDiv>
+                </>
+              )}
             </React.Fragment>
           ))}
         </InfoBox>
@@ -78,22 +82,13 @@ const TestChart = ({ forecastHour }: ChartType) => {
   );
 };
 
-const Test = styled.div`
-  width: 50px;
-  height: 100%;
-
-  background-color: transparent;
-  /* transform: translate3d(0px, 100px, 0px); */
-  border-right: 1px solid black;
-
-  background-color: red;
-`;
-
 const Div = styled.div`
-  /* width: 100%; */
-  height: 500px;
+  width: 100%;
+  height: 300px;
   background-color: aqua;
-  overflow-x: scroll;
+  overflow-y: hidden;
+  overflow-x: auto;
+  /* overflow: overlay; */
 
   padding: 50px;
 `;
@@ -101,41 +96,31 @@ const Div = styled.div`
 const ChartDiv = styled.div<{ chart_length: number }>`
   position: relative;
   width: ${(props) => `${props.chart_length}px`};
+  height: 100%;
 `;
 
 const Svg = styled.svg`
   width: 100%;
-  height: 100px;
-  overflow-x: scroll;
-
-  background-color: white;
-
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; */
-
+  height: 100%;
   transform: scaleY(-1) scaleX(1);
+
+  /* background-color: white; */
 `;
 
 const Line = styled.line`
-  stroke: rgb(255, 0, 0);
+  stroke: gray;
   stroke-width: 2;
   transform: translateY(50%);
 `;
 
-const InfoBox = styled.div<{ chart_length: number }>`
-  width: ${(props) => `${props.chart_length}px`};
+const InfoBox = styled.div`
+  width: 100%;
   height: 100%;
   background-color: transparent;
+
   position: absolute;
   top: 0;
-
-  /* background-color:red; */
-
-  display: flex;
-
-  /* background-color: gold; */
+  left: 0;
 `;
 
 const Point = styled.div<{ left: number; top: number }>`
@@ -144,7 +129,7 @@ const Point = styled.div<{ left: number; top: number }>`
   border-radius: 50%;
   background-color: black;
 
-  bottom: ${(props) => `calc(${props.top}px - 2px + 50%)`};
+  bottom: ${(props) => `calc(${props.top}px + 50% - 5px)`};
   left: ${(props) => `calc(${props.left}px - 5px)`};
 
   position: absolute;
@@ -166,12 +151,12 @@ const Point = styled.div<{ left: number; top: number }>`
 `;
 
 const DateDiv = styled.div<{ left: number; top: number }>`
-  width: 200px;
-  height: 100px;
+  width: 100px;
+  height: 50px;
   /* border-radius: 50%; */
-  /* background-color: black; */
+  /* background-color: blue; */
 
-  bottom: -100px;
+  bottom: -50px;
   left: ${(props) => `calc(${props.left}px - 5px)`};
 
   position: absolute;
