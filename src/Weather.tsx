@@ -74,7 +74,7 @@ const Weather = () => {
     <Div>
       {weatherInfo ? (
         <>
-          {/* <Header
+          <Header
             city={weatherInfo.name}
             weatherIcon={weatherInfo.weather[0].icon}
             weatherState={weatherInfo.weather[0].description}
@@ -84,14 +84,14 @@ const Weather = () => {
             tempFeelsLike={Math.floor(weatherInfo.main.feels_like)}
           />
           <WeekForecast forecastWeek={weatherForecastWeek} />
-          <WeatherChart />
+          <TestChart forecastHour={weatherForecastHour} />
+          {/* <WeatherChart /> */}
           <Comment />
           <InfoBox />
           <Map />
           <TodayStory />
           <Video />
-          <MenuBox /> */}
-          <TestChart forecastHour={weatherForecastHour} />
+          <MenuBox />
         </>
       ) : (
         <>
