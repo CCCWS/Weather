@@ -6,20 +6,12 @@ interface ChartType {
 }
 
 const TestChart = ({ forecastHour }: ChartType) => {
-  // const test = { color: "blue" };
-  // const temp: tempType[] = [
-  //   { temp: 9, x1: "0", x2: "50", y1: "0", y2: "9%" },
-  //   { temp: 15, x1: "50", x2: "100", y1: "9%", y2: "15%" },
-  //   { temp: 1, x1: "100", x2: "150", y1: "15%", y2: "1%" },
-  //   { temp: 10, x1: "150", x2: "200", y1: "1%", y2: "10%" },
-  // ];\
-
   console.log(forecastHour);
 
   const [newForecast, setNewForecast] = useState<number[]>([]);
   const chartDataX = Array.from(
     { length: newForecast.length },
-    (_, i) => i * 100
+    (_, i) => i * 70
   );
 
   useEffect(() => {
@@ -33,14 +25,9 @@ const TestChart = ({ forecastHour }: ChartType) => {
     }
   }, [forecastHour]);
 
-  const test = [
-    50, 0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0,
-    50, 0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0,
-  ];
-
   return (
     <Div>
-      <ChartDiv chart_length={(newForecast.length - 1) * 100}>
+      <ChartDiv chart_length={(newForecast.length - 1) * 70}>
         <Svg>
           {newForecast.map((data, index) => (
             <React.Fragment key={index}>
@@ -61,7 +48,7 @@ const TestChart = ({ forecastHour }: ChartType) => {
         <InfoBox>
           {forecastHour.list.map((data: any, index: number) => (
             <React.Fragment key={index}>
-              {index === newForecast.length - 1 ? (
+              {index === newForecast.length ? (
                 <></>
               ) : (
                 <>
@@ -74,15 +61,22 @@ const TestChart = ({ forecastHour }: ChartType) => {
                     <PointBox temp={newForecast[index]}>
                       <Img
                         url={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
-                      ></Img>
+                      />
                       <div>{newForecast[index]}°</div>
                     </PointBox>
                   </Point>
 
                   <DateDiv left={chartDataX[index]} top={newForecast[index]}>
-                    {`${new Date(
-                      forecastHour.list[index].dt_txt
-                    ).getHours()}시`}
+                    <div>
+                      {`${new Date(
+                        forecastHour.list[index].dt_txt
+                      ).getDate()}일`}
+                    </div>
+                    <div>
+                      {`${new Date(
+                        forecastHour.list[index].dt_txt
+                      ).getHours()}시`}
+                    </div>
                   </DateDiv>
                 </>
               )}
@@ -96,8 +90,9 @@ const TestChart = ({ forecastHour }: ChartType) => {
 
 const Div = styled.div`
   width: 100%;
-  height: 300px;
+  height: 250px;
   background-color: #8b8b8b42;
+
   overflow-y: hidden;
   overflow-x: auto;
   /* overflow: overlay; */
@@ -107,17 +102,18 @@ const Div = styled.div`
 `;
 
 const ChartDiv = styled.div<{ chart_length: number }>`
-  position: relative;
   width: ${(props) => `${props.chart_length}px`};
   height: 100%;
+  position: relative;
 `;
 
 const Svg = styled.svg`
   width: 100%;
   height: 100%;
+
   transform: scaleY(-1) scaleX(1);
 
-  /* background-color: white; */
+  background-color: white;
 `;
 
 const Line = styled.line`
@@ -129,11 +125,13 @@ const Line = styled.line`
 const InfoBox = styled.div`
   width: 100%;
   height: 100%;
-  background-color: transparent;
+  background-color: red;
 
   position: absolute;
   top: 0;
   left: 0;
+
+  overflow-y: hidden;
 `;
 
 const Point = styled.div<{ left: number; top: number }>`
@@ -155,6 +153,7 @@ const Point = styled.div<{ left: number; top: number }>`
 `;
 
 const PointBox = styled.div<{ temp: number }>`
+  background-color: red;
   width: 50px;
   height: 50px;
   position: absolute;
@@ -177,7 +176,7 @@ const PointBox = styled.div<{ temp: number }>`
 `;
 
 const Img = styled.div<{ url: string }>`
-  width: 100%;
+  width: 33%;
   height: 50%;
 
   background: ${(props) => `url(${props.url})`};
@@ -187,6 +186,7 @@ const Img = styled.div<{ url: string }>`
 `;
 
 const DateDiv = styled.div<{ left: number; top: number }>`
+  background-color: red;
   width: 100px;
   height: 50px;
   /* border-radius: 50%; */
