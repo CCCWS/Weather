@@ -12,10 +12,6 @@ import TodayStory from "./WeatherPage/TodayStory";
 import Video from "./WeatherPage/Video";
 import MenuBox from "./WeatherPage/MenuBox";
 
-import Test from "./WeatherPage/Test";
-
-import TestChart from "./WeatherPage/TestChart";
-
 const API_KEY = "b5ca0b1f1b1ff2ccea56184d385df768";
 const WEATHER_URL = "https://api.openweathermap.org/data/2.5/";
 
@@ -83,53 +79,49 @@ const Weather = () => {
             tempMax={Math.floor(weatherInfo.main.temp_max)}
             tempFeelsLike={Math.floor(weatherInfo.main.feels_like)}
           />
-          <WeekForecast forecastWeek={weatherForecastWeek} />
-          <TestChart forecastHour={weatherForecastHour} />
-          {/* <WeatherChart /> */}
-          <Comment />
-          <InfoBox />
-          <Map />
-          <TodayStory />
-          <Video />
-          <MenuBox />
+          <WeatherDiv>
+            <WeekForecast forecastWeek={weatherForecastWeek} />
+            <WeatherChart forecastHour={weatherForecastHour} />
+            <Comment />
+            <InfoBox />
+            <Map />
+            <TodayStory />
+            <Video />
+            <MenuBox />
+          </WeatherDiv>
         </>
       ) : (
         <>
-          {/* <TestChart forecastHour={weatherForecastHour} /> */}
-          {/* <Test /> */}
           <div>로딩중</div>
         </>
       )}
-
-      {/* {weatherInfo && (
-        <Img
-          url={`http://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`}
-        />
-      )} */}
     </Div>
   );
 };
 
-const Img = styled.div<{ url: string }>`
-  width: 100px;
-  height: 100px;
-
-  background: ${(props) => `url(${props.url})`};
-`;
-
 const Div = styled.div`
   width: 100vw;
   min-height: 100vh;
-  background-color: #ffffff7a;
+  /* background-color: #f14f4f79; */
 
-  overflow-y: scroll;
-  overflow: overlay;
-
-  padding: 10px;
+  /* padding: 15px; */
 
   display: flex;
   flex-direction: column;
   gap: 15px 0px;
+
+  position: relative;
+  margin: auto 0;
+
+  /* overflow-y: scroll; */
+  overflow-x: scroll;
+`;
+
+const WeatherDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px 0px;
+  padding: 15px;
 `;
 
 export default React.memo(Weather);

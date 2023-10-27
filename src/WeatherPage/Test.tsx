@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 
-import useObserver from "./useObserver";
+import useObserver from "../useObserver";
 
 const Test = () => {
   const itemRef = useRef<HTMLDivElement>(null);

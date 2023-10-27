@@ -1,8 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import ScrollContainer from "react-indiana-drag-scroll";
 
 const Comment = () => {
-  return <Div>Comment</Div>;
+  return (
+    <ScrollContainer horizontal={true} hideScrollbars={false}>
+      <Div>
+        <div></div>
+      </Div>
+    </ScrollContainer>
+  );
 };
 
 const Div = styled.div`
@@ -12,6 +19,13 @@ const Div = styled.div`
   height: 100px;
 
   border-radius: 30px;
+
+  /* overflow-x: scroll; */
+
+  & > :first-child {
+    width: 300%;
+    height: 100%;
+  }
 `;
 
 export default Comment;
