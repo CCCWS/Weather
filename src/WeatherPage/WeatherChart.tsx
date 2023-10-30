@@ -30,7 +30,7 @@ const WeatherChart = ({ forecastHour }: ChartType) => {
   }, [forecastHour]);
 
   return (
-    <Chart>
+    <>
       <ScrollContainer horizontal={true}>
         <Div ref={chartRef}>
           <ChartDiv chart_length={(newForecast.length - 1) * 70}>
@@ -95,7 +95,7 @@ const WeatherChart = ({ forecastHour }: ChartType) => {
           </ChartDiv>
         </Div>
       </ScrollContainer>
-    </Chart>
+    </>
   );
 };
 

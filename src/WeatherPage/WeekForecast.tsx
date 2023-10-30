@@ -11,7 +11,7 @@ const WeekForecast = ({ forecastWeek }: WeekForecastProps) => {
   const timezone_offset = 32400;
 
   return (
-    <Div>
+    <>
       {forecastWeek.daily.map((data: any, index: number) => (
         <WeatherList key={index}>
           <Day>
@@ -34,7 +34,7 @@ const WeekForecast = ({ forecastWeek }: WeekForecastProps) => {
           </Temp>
         </WeatherList>
       ))}
-    </Div>
+    </>
   );
 };
 

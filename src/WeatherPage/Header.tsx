@@ -10,6 +10,7 @@ interface HeaderProps {
   tempMin: number;
   tempMax: number;
   tempFeelsLike: number;
+  headerView: boolean;
 }
 
 const Header = ({
@@ -20,13 +21,14 @@ const Header = ({
   tempMin,
   tempMax,
   tempFeelsLike,
+  headerView,
 }: HeaderProps) => {
-  const headerRef = useRef<HTMLDivElement>(null);
-  const { isView } = useObserver(headerRef, 0.1);
+  // const headerRef = useRef<HTMLDivElement>(null);
+  // const { isView } = useObserver(headerRef, 0.1);
 
   return (
     <>
-      <Div ref={headerRef}>
+      <Div>
         <Info>
           <Top>
             <div>{temp}°</div>
@@ -41,7 +43,7 @@ const Header = ({
         <Img url={`http://openweathermap.org/img/wn/${weatherIcon}@2x.png`} />
       </Div>
 
-      <MiniHeader isView={isView}>
+      <MiniHeader $is_view={headerView}>
         <MiniHeaderTemp>
           <div>{temp}°</div>
           <TempAndState>
@@ -57,20 +59,14 @@ const Header = ({
 
 const Div = styled.div`
   width: 100%;
-  height: 250px;
-  border-radius: 30px;
-  display: flex;
-  overflow: hidden;
+  height: 100%;
   padding: 15px;
-
-  /* background-color: red; */
+  display: flex;
 `;
 
 const Info = styled.div`
   width: 50%;
   height: 100%;
-
-  /* background-color: red; */
 
   padding: 30px;
 
@@ -106,20 +102,21 @@ const Img = styled.div<{ url: string }>`
   background-size: contain;
 `;
 
-const MiniHeader = styled.div<{ isView: boolean }>`
+const MiniHeader = styled.div<{ $is_view: boolean }>`
   position: fixed;
 
   width: 100%;
   height: 70px;
 
+  top: 0;
   border-radius: 0px 0px 30px 30px;
   background-color: #bbbbbb6f;
   backdrop-filter: blur(10px);
 
   transition: 0.3s;
-  opacity: ${(props) => (props.isView ? 0 : 1)};
+  opacity: ${(props) => (props.$is_view ? 0 : 1)};
   transform: ${(props) =>
-    props.isView ? "translate3d(0, -50%, 0)" : "translate3d(0, 0, 0)"};
+    props.$is_view ? "translate3d(0, -50%, 0)" : "translate3d(0, 0, 0)"};
 
   z-index: 1000;
 
