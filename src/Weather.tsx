@@ -13,6 +13,7 @@ import Video from "./WeatherPage/Video";
 import MenuBox from "./WeatherPage/MenuBox";
 
 import LoadingIcon from "./LoadingIcon";
+import HeaderTest from "./WeatherPage/HeaderTest";
 
 import useObserver from "./useObserver";
 
@@ -79,65 +80,19 @@ const Weather = () => {
 
   return (
     <Div>
-      <LoadingIcon size={50}></LoadingIcon>
-      {/* <HeaderDiv ref={headerRef}>
-        {weatherInfo ? (
-          <>
-            <Header
-              city={weatherInfo.name}
-              weatherIcon={weatherInfo.weather[0].icon}
-              weatherState={weatherInfo.weather[0].description}
-              temp={Math.floor(weatherInfo.main.temp)}
-              tempMin={Math.floor(weatherInfo.main.temp_min)}
-              tempMax={Math.floor(weatherInfo.main.temp_max)}
-              tempFeelsLike={Math.floor(weatherInfo.main.feels_like)}
-              headerView={isView}
-            />
-          </>
-        ) : (
-          <LoadingIcon size={50}></LoadingIcon>
-        )}
-      </HeaderDiv>
-
-      <WeatherDiv>
-        <WeatherForecastWeekDiv>
-          {weatherForecastWeek ? (
-            <WeekForecast forecastWeek={weatherForecastWeek} />
-          ) : (
-            <LoadingIcon size={50}></LoadingIcon>
-          )}
-        </WeatherForecastWeekDiv>
-
-        <WeatherChartDiv>
-          {weatherForecastHour ? (
-            <WeatherChart forecastHour={weatherForecastHour} />
-          ) : (
-            <LoadingIcon size={50}></LoadingIcon>
-          )}
-        </WeatherChartDiv>
-
-        <Comment />
-        <InfoBox />
-        <Map />
-        <TodayStory />
-        <Video />
-        <MenuBox />
-      </WeatherDiv> */}
+      <HeaderTest weatherInfo={weatherInfo}></HeaderTest>
+      <WeekForecast forecastWeek={weatherForecastWeek} />
+      <WeatherChart forecastHour={weatherForecastHour} />
     </Div>
   );
 };
-const Test = styled.div`
-  width: 100%;
-  min-height: 500vh;
-  background-color: blue;
-`;
 
 const Div = styled.div`
   width: 100vw;
   min-height: 100vh;
   /* background-color: #f14f4f79; */
 
-  /* padding: 15px; */
+  padding: 15px;
 
   display: flex;
   flex-direction: column;
@@ -148,56 +103,6 @@ const Div = styled.div`
 
   /* overflow-y: scroll; */
   overflow-x: scroll;
-`;
-
-const WeatherDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px 0px;
-  padding: 15px;
-`;
-
-const HeaderDiv = styled.div`
-  width: 100%;
-  height: 250px;
-  border-radius: 30px;
-  overflow: hidden;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const WeatherForecastWeekDiv = styled.div`
-  background-color: #8b8b8b42;
-
-  width: 100%;
-  height: 800px;
-
-  border-radius: 30px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  overflow: hidden;
-`;
-
-const WeatherChartDiv = styled.div`
-  width: 100%;
-  height: 250px;
-  background-color: #8b8b8b42;
-
-  /* overflow-y: hidden; */
-  /* overflow-x: auto; */
-  /* overflow: overlay; */
-  border-radius: 30px;
-  overflow: hidden;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 export default React.memo(Weather);

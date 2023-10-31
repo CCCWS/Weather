@@ -1,58 +1,58 @@
 import React, { useRef } from "react";
 import styled, { css } from "styled-components";
+
+import LoadingIcon from "../LoadingIcon";
 import useObserver from "../useObserver";
 
 interface HeaderProps {
-  city: string;
-  weatherIcon: string;
-  weatherState: string;
-  temp: number;
-  tempMin: number;
-  tempMax: number;
-  tempFeelsLike: number;
-  headerView: boolean;
+  weatherInfo: any;
 }
 
-const Header = ({
-  city,
-  weatherIcon,
-  weatherState,
-  temp,
-  tempMin,
-  tempMax,
-  tempFeelsLike,
-  headerView,
-}: HeaderProps) => {
-  // const headerRef = useRef<HTMLDivElement>(null);
-  // const { isView } = useObserver(headerRef, 0.1);
+const HeaderTest = ({ weatherInfo }: HeaderProps) => {
+  const headerRef = useRef<HTMLDivElement>(null);
+  const { isView } = useObserver(headerRef, 0.1);
 
   return (
-    <HeaderDiv>
-      <>
-        <Info>
-          <Top>
-            <div>{temp}°</div>
-            <div>{weatherState}</div>
-          </Top>
+    <HeaderDiv ref={headerRef}>
+      {weatherInfo ? (
+        <>
+          <>
+            <Info>
+              <Top>
+                <div>{Math.floor(weatherInfo.main.temp)}°</div>
+                <div>{weatherInfo.weather[0].description}</div>
+              </Top>
 
-          <Bottom>
-            <div>{city}</div>
-            <div>{`${tempMax}° / ${tempMin}° 체감온도 ${tempFeelsLike}°`}</div>
-          </Bottom>
-        </Info>
-        <Img url={`http://openweathermap.org/img/wn/${weatherIcon}@2x.png`} />
-      </>
+              <Bottom>
+                <div>{weatherInfo.name}</div>
+                <div>{`${Math.floor(weatherInfo.main.temp_max)}° / ${Math.floor(
+                  weatherInfo.main.temp_min
+                )}° 체감온도 ${Math.floor(weatherInfo.main.feels_like)}°`}</div>
+              </Bottom>
+            </Info>
+            <Img
+              url={`http://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`}
+            />
+          </>
 
-      <MiniHeader $is_view={headerView}>
-        <MiniHeaderTemp>
-          <div>{temp}°</div>
-          <TempAndState>
-            <div>{`${tempMax}° / ${tempMin}°`}</div>
-            <div>{weatherState}</div>
-          </TempAndState>
-        </MiniHeaderTemp>
-        <Img url={`http://openweathermap.org/img/wn/${weatherIcon}@2x.png`} />
-      </MiniHeader>
+          <MiniHeader $is_view={isView}>
+            <MiniHeaderTemp>
+              <div>{Math.floor(weatherInfo.main.temp)}°</div>
+              <TempAndState>
+                <div>{`${Math.floor(weatherInfo.main.temp_max)}° / ${Math.floor(
+                  weatherInfo.main.temp_min
+                )}°`}</div>
+                <div>{weatherInfo.weather[0].description}</div>
+              </TempAndState>
+            </MiniHeaderTemp>
+            <Img
+              url={`http://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`}
+            />
+          </MiniHeader>
+        </>
+      ) : (
+        <LoadingIcon size={50}></LoadingIcon>
+      )}
     </HeaderDiv>
   );
 };
@@ -160,4 +160,4 @@ const TempAndState = styled.div`
   }
 `;
 
-export default Header;
+export default HeaderTest;

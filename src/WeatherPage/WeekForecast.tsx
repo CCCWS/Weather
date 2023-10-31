@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import LoadingIcon from "../LoadingIcon";
+
 interface WeekForecastProps {
   forecastWeek: any;
 }
@@ -11,30 +13,35 @@ const WeekForecast = ({ forecastWeek }: WeekForecastProps) => {
   const timezone_offset = 32400;
 
   return (
-    <>
-      {forecastWeek.daily.map((data: any, index: number) => (
-        <WeatherList key={index}>
-          <Day>
-            {new Date((data.dt + timezone_offset) * 1000).toLocaleDateString(
-              [],
-              {
-                timeZone: "UTC",
-                weekday: "long",
-              }
-            )}
-          </Day>
+    <Div>
+      {forecastWeek ? (
+        <>
+          {forecastWeek.daily.map((data: any, index: number) => (
+            <WeatherList key={index}>
+              <Day>
+                {new Date(
+                  (data.dt + timezone_offset) * 1000
+                ).toLocaleDateString([], {
+                  timeZone: "UTC",
+                  weekday: "long",
+                })}
+              </Day>
 
-          <Humidity ratio={data.humidity}>{`${data.humidity}%`}</Humidity>
+              <Humidity ratio={data.humidity}>{`${data.humidity}%`}</Humidity>
 
-          <Img
-            url={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
-          />
-          <Temp>
-            {`${Math.floor(data.temp.max)}° ${Math.floor(data.temp.min)}°`}
-          </Temp>
-        </WeatherList>
-      ))}
-    </>
+              <Img
+                url={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+              />
+              <Temp>
+                {`${Math.floor(data.temp.max)}° ${Math.floor(data.temp.min)}°`}
+              </Temp>
+            </WeatherList>
+          ))}
+        </>
+      ) : (
+        <LoadingIcon size={50} />
+      )}
+    </Div>
   );
 };
 
@@ -42,12 +49,14 @@ const Div = styled.div`
   background-color: #8b8b8b42;
 
   width: 100%;
+  height: 800px;
 
   border-radius: 30px;
 
   display: flex;
   flex-direction: column;
-  gap: 0px 0px;
+  justify-content: center;
+  align-items: center;
 
   overflow: hidden;
 `;

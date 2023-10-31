@@ -29,8 +29,8 @@ const Div = styled.div<{ size: number }>`
     width: 70%;
     height: 70%;
     position: absolute;
-    background-color: red;
-    opacity: 0;
+    background-color: white;
+    opacity: 1;
     border-radius: inherit;
   }
 

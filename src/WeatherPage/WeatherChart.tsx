@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import useDragScroll from "../useDragScroll";
 import ScrollContainer from "react-indiana-drag-scroll";
+import LoadingIcon from "../LoadingIcon";
 
 interface ChartType {
   forecastHour: any;
@@ -9,14 +9,11 @@ interface ChartType {
 
 const WeatherChart = ({ forecastHour }: ChartType) => {
   const chartRef = useRef<any>(null);
-  const { setTranslateX } = useDragScroll(chartRef);
   const [newForecast, setNewForecast] = useState<number[]>([]);
   const chartDataX = Array.from(
     { length: newForecast.length },
     (_, i) => i * 70
   );
-
-  console.log(setTranslateX);
 
   useEffect(() => {
     if (forecastHour) {
@@ -30,72 +27,78 @@ const WeatherChart = ({ forecastHour }: ChartType) => {
   }, [forecastHour]);
 
   return (
-    <>
-      <ScrollContainer horizontal={true}>
-        <Div ref={chartRef}>
-          <ChartDiv chart_length={(newForecast.length - 1) * 70}>
-            <Svg>
-              {newForecast.map((data, index) => (
-                <React.Fragment key={index}>
-                  {index === newForecast.length - 1 ? (
-                    <></>
-                  ) : (
-                    <Line
-                      x1={chartDataX[index]}
-                      x2={chartDataX[index + 1]}
-                      y1={newForecast[index]}
-                      y2={newForecast[index + 1]}
-                    />
-                  )}
-                </React.Fragment>
-              ))}
-            </Svg>
+    <Chart>
+      {forecastHour ? (
+        <>
+          <ScrollContainer horizontal={true}>
+            <Div ref={chartRef}>
+              <ChartDiv chart_length={(newForecast.length - 1) * 70}>
+                <Svg>
+                  {newForecast.map((data, index) => (
+                    <React.Fragment key={index}>
+                      {index === newForecast.length - 1 ? (
+                        <></>
+                      ) : (
+                        <Line
+                          x1={chartDataX[index]}
+                          x2={chartDataX[index + 1]}
+                          y1={newForecast[index]}
+                          y2={newForecast[index + 1]}
+                        />
+                      )}
+                    </React.Fragment>
+                  ))}
+                </Svg>
 
-            <InfoBox>
-              {forecastHour.list.map((data: any, index: number) => (
-                <React.Fragment key={index}>
-                  {index === newForecast.length ? (
-                    <></>
-                  ) : (
-                    <>
-                      <Point
-                        key={index}
-                        left={chartDataX[index]}
-                        top={newForecast[index]}
-                      >
-                        <div />
-                        <PointBox temp={newForecast[index]}>
-                          <Img
-                            url={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
-                          />
-                          <div>{newForecast[index]}°</div>
-                        </PointBox>
-                      </Point>
+                <InfoBox>
+                  {forecastHour.list.map((data: any, index: number) => (
+                    <React.Fragment key={index}>
+                      {index === newForecast.length ? (
+                        <></>
+                      ) : (
+                        <>
+                          <Point
+                            key={index}
+                            left={chartDataX[index]}
+                            top={newForecast[index]}
+                          >
+                            <div />
+                            <PointBox temp={newForecast[index]}>
+                              <Img
+                                url={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+                              />
+                              <div>{newForecast[index]}°</div>
+                            </PointBox>
+                          </Point>
 
-                      <DateDiv
-                        left={chartDataX[index]}
-                        top={newForecast[index]}
-                      >
-                        <div>
-                          {`${new Date(
-                            forecastHour.list[index].dt_txt
-                          ).getDate()}일`}
-                        </div>
-                        <div>
-                          {`${new Date(
-                            forecastHour.list[index].dt_txt
-                          ).getHours()}시`}
-                        </div>
-                      </DateDiv>
-                    </>
-                  )}
-                </React.Fragment>
-              ))}
-            </InfoBox>
-          </ChartDiv>
-        </Div>
-      </ScrollContainer>
-    </>
+                          <DateDiv
+                            left={chartDataX[index]}
+                            top={newForecast[index]}
+                          >
+                            <div>
+                              {`${new Date(
+                                forecastHour.list[index].dt_txt
+                              ).getDate()}일`}
+                            </div>
+                            <div>
+                              {`${new Date(
+                                forecastHour.list[index].dt_txt
+                              ).getHours()}시`}
+                            </div>
+                          </DateDiv>
+                        </>
+                      )}
+                    </React.Fragment>
+                  ))}
+                </InfoBox>
+              </ChartDiv>
+            </Div>
+          </ScrollContainer>
+        </>
+      ) : (
+        <LoadingIcon size={50} />
+      )}
+    </Chart>
   );
 };
 
@@ -109,6 +112,10 @@ const Chart = styled.div`
   /* overflow: overlay; */
   border-radius: 30px;
   overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Div = styled.div`
