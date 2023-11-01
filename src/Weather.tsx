@@ -64,7 +64,7 @@ const Weather = () => {
       // const ttest = new Date(test).toUTCString();
       // console.log(ttest);
 
-      console.log(weatherInfo);
+      // console.log(weatherInfo);
 
       const date = new Date((weatherInfo.dt + weatherInfo.timezone) * 1000);
 

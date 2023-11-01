@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import LoadingIcon from "../LoadingIcon";
 
 interface InfoBoxProps {
   weatherInfo: any;
@@ -7,14 +8,75 @@ interface InfoBoxProps {
 }
 
 const InfoBox = ({ weatherInfo, airPollution }: InfoBoxProps) => {
+  useEffect(() => {
+    if (weatherInfo) {
+      console.log(weatherInfo);
+
+      const sunrise = new Date(
+        (weatherInfo.sys.sunrise + weatherInfo.timezone) * 1000
+      );
+
+      const sunset = new Date(
+        (weatherInfo.sys.sunset + weatherInfo.timezone) * 1000
+      );
+
+      const option = {
+        timeZone: "UTC",
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      };
+
+      const sunriseTime = sunrise.toLocaleTimeString([], {
+        timeZone: "UTC",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      });
+
+      const sunsetTime = sunset.toLocaleTimeString([], {
+        timeZone: "UTC",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      });
+
+      console.log(sunriseTime);
+    }
+  }, [weatherInfo]);
+
   return (
     <Div>
-      <Test></Test>
-      <Test></Test>
-      <Test></Test>
-      <Test></Test>
-      <Test></Test>
-      <Test></Test>
+      {weatherInfo ? (
+        <>
+          <Test>{`일출 : ${new Date(
+            (weatherInfo.sys.sunrise + weatherInfo.timezone) * 1000
+          ).toLocaleTimeString([], {
+            timeZone: "UTC",
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true,
+          })}`}</Test>
+
+          <Test>{`일몰 : ${new Date(
+            (weatherInfo.sys.sunset + weatherInfo.timezone) * 1000
+          ).toLocaleTimeString([], {
+            timeZone: "UTC",
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true,
+          })}`}</Test>
+          <Test></Test>
+          <Test></Test>
+          <Test></Test>
+          <Test></Test>
+        </>
+      ) : (
+        <></>
+      )}
     </Div>
   );
 };
@@ -38,7 +100,7 @@ const Div = styled.div`
 const Test = styled.div`
   width: 100%;
   height: 100%;
-  background-color: black;
+  background-color: white;
 
   border-radius: inherit;
 `;
