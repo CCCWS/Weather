@@ -5,8 +5,8 @@ import axios from "axios";
 import Header from "./WeatherPage/Header";
 import WeekForecast from "./WeatherPage/WeekForecast";
 import WeatherChart from "./WeatherPage/WeatherChart";
-import Comment from "./WeatherPage/Comment";
 import InfoBox from "./WeatherPage/InfoBox";
+import Comment from "./WeatherPage/Comment";
 import Map from "./WeatherPage/Map";
 import TodayStory from "./WeatherPage/TodayStory";
 import Video from "./WeatherPage/Video";
@@ -25,6 +25,7 @@ const Weather = () => {
   const { isView } = useObserver(headerRef, 0.1);
 
   const [weatherInfo, setWeatherInfo] = useState<any>();
+  const [airPollution, setAirPollution] = useState<any>();
   const [weatherForecastWeek, setWeatherForcastWeek] = useState<any>();
   const [weatherForecastHour, setWeatherForcastHour] = useState<any>();
 
@@ -37,6 +38,10 @@ const Weather = () => {
 
       const weatherToday = await axios.get(`${WEATHER_URL}weather?${location}`);
 
+      const AirPollution = await axios.get(
+        `${WEATHER_URL}air_pollution?${location}`
+      );
+
       const weatherForecastWeek = await axios.get(
         `${WEATHER_URL}onecall?&exclude=current,minutely,alerts&${location}`
       );
@@ -46,6 +51,7 @@ const Weather = () => {
       );
 
       setWeatherInfo(weatherToday.data);
+      setAirPollution(AirPollution.data.list[0].components);
       setWeatherForcastWeek(weatherForecastWeek.data);
       setWeatherForcastHour(weatherForecastHour.data);
     });
@@ -76,13 +82,12 @@ const Weather = () => {
     }
   }, [weatherInfo]);
 
-  console.log(isView);
-
   return (
     <Div>
       <HeaderTest weatherInfo={weatherInfo}></HeaderTest>
       <WeekForecast forecastWeek={weatherForecastWeek} />
       <WeatherChart forecastHour={weatherForecastHour} />
+      <InfoBox weatherInfo={weatherInfo} airPollution={airPollution}></InfoBox>
     </Div>
   );
 };
