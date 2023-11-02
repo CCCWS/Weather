@@ -29,6 +29,36 @@ const Weather = () => {
   const [weatherForecastWeek, setWeatherForcastWeek] = useState<any>();
   const [weatherForecastHour, setWeatherForcastHour] = useState<any>();
 
+  const onApi = () => {
+    navigator.geolocation.getCurrentPosition(async function (pos) {
+      const latitude = pos.coords.latitude;
+      const longitude = pos.coords.longitude;
+
+      const location = `lat=${latitude}&lon=${longitude}&appid=${API_KEY}&lang=kr&units=metric`;
+
+      const weatherToday = await axios.get(`${WEATHER_URL}weather?${location}`);
+
+      const AirPollution = await axios.get(
+        `${WEATHER_URL}air_pollution?${location}`
+      );
+
+      const weatherForecastWeek = await axios.get(
+        `${WEATHER_URL}onecall?&exclude=current,minutely,alerts&${location}`
+      );
+
+      const weatherForecastHour = await axios.get(
+        `${WEATHER_URL}forecast?&${location}`
+      );
+
+      console.log(weatherForecastWeek);
+
+      setWeatherInfo(weatherToday.data);
+      setAirPollution(AirPollution.data.list[0].components);
+      setWeatherForcastWeek(weatherForecastWeek.data);
+      setWeatherForcastHour(weatherForecastHour.data);
+    });
+  };
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(async function (pos) {
       const latitude = pos.coords.latitude;
@@ -49,6 +79,8 @@ const Weather = () => {
       const weatherForecastHour = await axios.get(
         `${WEATHER_URL}forecast?&${location}`
       );
+
+      console.log(weatherForecastWeek);
 
       setWeatherInfo(weatherToday.data);
       setAirPollution(AirPollution.data.list[0].components);
@@ -82,8 +114,13 @@ const Weather = () => {
     }
   }, [weatherInfo]);
 
+  const onRefresh = () => {
+    onApi();
+  };
+
   return (
     <Div>
+      <Refresh onClick={onRefresh}></Refresh>
       <HeaderTest weatherInfo={weatherInfo}></HeaderTest>
       <WeekForecast forecastWeek={weatherForecastWeek} />
       <WeatherChart forecastHour={weatherForecastHour} />
@@ -92,10 +129,21 @@ const Weather = () => {
   );
 };
 
+const Refresh = styled.div`
+  width: 100%;
+  height: 200px;
+  background-color: black;
+`;
+
 const Div = styled.div`
   width: 100vw;
   min-height: 100vh;
   /* background-color: #f14f4f79; */
+
+  background-image: url("https://source.unsplash.com/v9bnfMCyKbg/1600x900");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   padding: 15px;
 

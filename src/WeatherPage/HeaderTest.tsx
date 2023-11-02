@@ -57,13 +57,6 @@ const HeaderTest = ({ weatherInfo }: HeaderProps) => {
   );
 };
 
-const Div = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 15px;
-  display: flex;
-`;
-
 const HeaderDiv = styled.div`
   width: 100%;
   height: 250px;
@@ -73,6 +66,9 @@ const HeaderDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  backdrop-filter: blur(5px);
+  border: 1px solid gray;
 `;
 
 const Info = styled.div`

@@ -29,72 +29,70 @@ const WeatherChart = ({ forecastHour }: ChartType) => {
   return (
     <Chart>
       {forecastHour ? (
-        <>
-          <ScrollContainer horizontal={true}>
-            <Div ref={chartRef}>
-              <ChartDiv chart_length={(newForecast.length - 1) * 70}>
-                <Svg>
-                  {newForecast.map((data, index) => (
-                    <React.Fragment key={index}>
-                      {index === newForecast.length - 1 ? (
-                        <></>
-                      ) : (
-                        <Line
-                          x1={chartDataX[index]}
-                          x2={chartDataX[index + 1]}
-                          y1={newForecast[index]}
-                          y2={newForecast[index + 1]}
-                        />
-                      )}
-                    </React.Fragment>
-                  ))}
-                </Svg>
+        <ScrollContainer horizontal={true}>
+          <Div ref={chartRef}>
+            <ChartDiv chart_length={(newForecast.length - 1) * 70}>
+              <Svg>
+                {newForecast.map((data, index) => (
+                  <React.Fragment key={index}>
+                    {index === newForecast.length - 1 ? (
+                      <></>
+                    ) : (
+                      <Line
+                        x1={chartDataX[index]}
+                        x2={chartDataX[index + 1]}
+                        y1={newForecast[index]}
+                        y2={newForecast[index + 1]}
+                      />
+                    )}
+                  </React.Fragment>
+                ))}
+              </Svg>
 
-                <InfoBox>
-                  {forecastHour.list.map((data: any, index: number) => (
-                    <React.Fragment key={index}>
-                      {index === newForecast.length ? (
-                        <></>
-                      ) : (
-                        <>
-                          <Point
-                            key={index}
-                            left={chartDataX[index]}
-                            top={newForecast[index]}
-                          >
-                            <div />
-                            <PointBox temp={newForecast[index]}>
-                              <Img
-                                url={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
-                              />
-                              <div>{newForecast[index]}°</div>
-                            </PointBox>
-                          </Point>
+              <InfoBox>
+                {forecastHour.list.map((data: any, index: number) => (
+                  <React.Fragment key={index}>
+                    {index === newForecast.length ? (
+                      <></>
+                    ) : (
+                      <>
+                        <Point
+                          key={index}
+                          left={chartDataX[index]}
+                          top={newForecast[index]}
+                        >
+                          <div />
+                          <PointBox temp={newForecast[index]}>
+                            <Img
+                              url={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+                            />
+                            <div>{newForecast[index]}°</div>
+                          </PointBox>
+                        </Point>
 
-                          <DateDiv
-                            left={chartDataX[index]}
-                            top={newForecast[index]}
-                          >
-                            <div>
-                              {`${new Date(
-                                forecastHour.list[index].dt_txt
-                              ).getDate()}일`}
-                            </div>
-                            <div>
-                              {`${new Date(
-                                forecastHour.list[index].dt_txt
-                              ).getHours()}시`}
-                            </div>
-                          </DateDiv>
-                        </>
-                      )}
-                    </React.Fragment>
-                  ))}
-                </InfoBox>
-              </ChartDiv>
-            </Div>
-          </ScrollContainer>
-        </>
+                        <DateDiv
+                          left={chartDataX[index]}
+                          top={newForecast[index]}
+                        >
+                          <div>
+                            {`${new Date(
+                              forecastHour.list[index].dt_txt
+                            ).getDate()}일`}
+                          </div>
+                          <div>
+                            {`${new Date(
+                              forecastHour.list[index].dt_txt
+                            ).getHours()}시`}
+                          </div>
+                        </DateDiv>
+                      </>
+                    )}
+                  </React.Fragment>
+                ))}
+              </InfoBox>
+            </ChartDiv>
+          </Div>
+        </ScrollContainer>
       ) : (
         <LoadingIcon size={50} />
       )}
@@ -105,7 +103,10 @@ const WeatherChart = ({ forecastHour }: ChartType) => {
 const Chart = styled.div`
   width: 100%;
   height: 250px;
-  background-color: #8b8b8b42;
+  /* background-color: #8b8b8b42; */
+
+  backdrop-filter: blur(5px);
+  border: 1px solid gray;
 
   /* overflow-y: hidden; */
   /* overflow-x: auto; */
@@ -116,10 +117,11 @@ const Chart = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  /* padding: 15px; */
 `;
 
 const Div = styled.div`
-  width: 100%;
   height: 100%;
   padding: 50px;
 `;
@@ -148,7 +150,6 @@ const Line = styled.line`
 const InfoBox = styled.div`
   width: 100%;
   height: 100%;
-  /* background-color: red; */
 
   position: absolute;
   top: 0;

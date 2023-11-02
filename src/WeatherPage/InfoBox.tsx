@@ -73,9 +73,9 @@ const InfoBox = ({ weatherInfo, airPollution }: InfoBoxProps) => {
           <Test></Test>
           <Test></Test>
           <Test></Test>
-        </>
+        </> 
       ) : (
-        <></>
+        <LoadingIcon size={50}></LoadingIcon>
       )}
     </Div>
   );
