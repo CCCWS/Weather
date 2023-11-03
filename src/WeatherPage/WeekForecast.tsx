@@ -46,7 +46,8 @@ const WeekForecast = ({ forecastWeek }: WeekForecastProps) => {
 };
 
 const Div = styled.div`
-  backdrop-filter: blur(5px);
+  /* background-color: red; */
+  backdrop-filter: blur(10px);
   border: 1px solid gray;
 
   width: 100%;

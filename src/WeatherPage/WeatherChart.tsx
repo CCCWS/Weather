@@ -104,8 +104,7 @@ const Chart = styled.div`
   width: 100%;
   height: 250px;
   /* background-color: #8b8b8b42; */
-
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
   border: 1px solid gray;
 
   /* overflow-y: hidden; */

@@ -13,17 +13,13 @@ import Video from "./WeatherPage/Video";
 import MenuBox from "./WeatherPage/MenuBox";
 
 import LoadingIcon from "./LoadingIcon";
-import HeaderTest from "./WeatherPage/HeaderTest";
 
-import useObserver from "./useObserver";
+import bgImg from "./Image/background_img.jpg";
 
 const API_KEY = "b5ca0b1f1b1ff2ccea56184d385df768";
 const WEATHER_URL = "https://api.openweathermap.org/data/2.5/";
 
 const Weather = () => {
-  const headerRef = useRef<HTMLDivElement>(null);
-  const { isView } = useObserver(headerRef, 0.1);
-
   const [weatherInfo, setWeatherInfo] = useState<any>();
   const [airPollution, setAirPollution] = useState<any>();
   const [weatherForecastWeek, setWeatherForcastWeek] = useState<any>();
@@ -49,8 +45,6 @@ const Weather = () => {
       const weatherForecastHour = await axios.get(
         `${WEATHER_URL}forecast?&${location}`
       );
-
-      console.log(weatherForecastWeek);
 
       setWeatherInfo(weatherToday.data);
       setAirPollution(AirPollution.data.list[0].components);
@@ -79,8 +73,6 @@ const Weather = () => {
       const weatherForecastHour = await axios.get(
         `${WEATHER_URL}forecast?&${location}`
       );
-
-      console.log(weatherForecastWeek);
 
       setWeatherInfo(weatherToday.data);
       setAirPollution(AirPollution.data.list[0].components);
@@ -120,8 +112,8 @@ const Weather = () => {
 
   return (
     <Div>
-      <Refresh onClick={onRefresh}></Refresh>
-      <HeaderTest weatherInfo={weatherInfo}></HeaderTest>
+      {/* <Refresh onClick={onRefresh}></Refresh> */}
+      <Header weatherInfo={weatherInfo} />
       <WeekForecast forecastWeek={weatherForecastWeek} />
       <WeatherChart forecastHour={weatherForecastHour} />
       <InfoBox weatherInfo={weatherInfo} airPollution={airPollution}></InfoBox>
@@ -140,9 +132,9 @@ const Div = styled.div`
   min-height: 100vh;
   /* background-color: #f14f4f79; */
 
-  background-image: url("https://source.unsplash.com/v9bnfMCyKbg/1600x900");
+  background-image: ${() => `url(${bgImg})`};
   background-size: cover;
-  background-position: center;
+  background-position: right;
   background-repeat: no-repeat;
 
   padding: 15px;
