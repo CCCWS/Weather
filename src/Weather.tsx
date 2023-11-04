@@ -54,31 +54,50 @@ const Weather = () => {
   };
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(async function (pos) {
-      const latitude = pos.coords.latitude;
-      const longitude = pos.coords.longitude;
+    const getApi = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (pos) => {
+            const latitude = pos.coords.latitude;
+            const longitude = pos.coords.longitude;
 
-      const location = `lat=${latitude}&lon=${longitude}&appid=${API_KEY}&lang=kr&units=metric`;
+            const location = `lat=${latitude}&lon=${longitude}&appid=${API_KEY}&lang=kr&units=metric`;
 
-      const weatherToday = await axios.get(`${WEATHER_URL}weather?${location}`);
+            const weatherToday = await axios.get(
+              `${WEATHER_URL}weather?${location}`
+            );
 
-      const AirPollution = await axios.get(
-        `${WEATHER_URL}air_pollution?${location}`
-      );
+            const AirPollution = await axios.get(
+              `${WEATHER_URL}air_pollution?${location}`
+            );
 
-      const weatherForecastWeek = await axios.get(
-        `${WEATHER_URL}onecall?&exclude=current,minutely,alerts&${location}`
-      );
+            const weatherForecastWeek = await axios.get(
+              `${WEATHER_URL}onecall?&exclude=current,minutely,alerts&${location}`
+            );
 
-      const weatherForecastHour = await axios.get(
-        `${WEATHER_URL}forecast?&${location}`
-      );
+            const weatherForecastHour = await axios.get(
+              `${WEATHER_URL}forecast?&${location}`
+            );
 
-      setWeatherInfo(weatherToday.data);
-      setAirPollution(AirPollution.data.list[0].components);
-      setWeatherForcastWeek(weatherForecastWeek.data);
-      setWeatherForcastHour(weatherForecastHour.data);
-    });
+            setWeatherInfo(weatherToday.data);
+            setAirPollution(AirPollution.data.list[0].components);
+            setWeatherForcastWeek(weatherForecastWeek.data);
+            setWeatherForcastHour(weatherForecastHour.data);
+          },
+          (err) => {
+            console.log(err.code);
+            // 0 > 알 수 없는 오류
+            // 1 > 권한 거부
+            // 2 > 추적 실패
+            // 3 > 시간 초과
+          }
+        );
+      } else {
+        console.log("not support");
+      }
+    };
+
+    getApi();
   }, []);
 
   useEffect(() => {

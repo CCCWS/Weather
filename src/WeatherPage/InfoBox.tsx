@@ -129,7 +129,7 @@ const InfoBox = ({ weatherInfo, airPollution }: InfoBoxProps) => {
   return (
     <Div>
       {infoArr ? (
-        <>
+        <ItemBox>
           {infoArr.map((data, index) => (
             <ItemDiv key={index}>
               <Item>
@@ -144,80 +144,10 @@ const InfoBox = ({ weatherInfo, airPollution }: InfoBoxProps) => {
               </Item>
             </ItemDiv>
           ))}
-        </>
+        </ItemBox>
       ) : (
-        <div>로딩</div>
+        <LoadingIcon size={50} />
       )}
-
-      {/* {weatherInfo ? (
-        <>
-          <ItemDiv>
-            <Item>
-              <ItemImg svg={sunrise} />
-              <div>일출</div>
-              <div>
-                {new Date(
-                  (weatherInfo.sys.sunrise + weatherInfo.timezone) * 1000
-                ).toLocaleTimeString([], {
-                  timeZone: "UTC",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: true,
-                })}
-              </div>
-            </Item>
-          </ItemDiv>
-
-          <ItemDiv>
-            <Item>
-              <ItemImg svg={sunset} />
-              <div>일몰</div>
-              <div>
-                {new Date(
-                  (weatherInfo.sys.sunset + weatherInfo.timezone) * 1000
-                ).toLocaleTimeString([], {
-                  timeZone: "UTC",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: true,
-                })}
-              </div>
-            </Item>
-          </ItemDiv>
-
-          <ItemDiv>
-            <Item>
-              <ItemImg svg={wind} />
-              <div>바람</div>
-              <div>{`${weatherInfo.wind.speed}m/s`}</div>
-            </Item>
-          </ItemDiv>
-
-          <ItemDiv>
-            <Item>
-              <ItemImg svg={humidity} />
-              <div>습도</div>
-              <div>{`${weatherInfo.main.humidity}%`}</div>
-            </Item>
-          </ItemDiv>
-
-          <ItemDiv>
-            <Item>
-              <div>미세먼지</div>
-              <div>{`${Math.floor(airPollution.pm10)}㎍/㎥`}</div>
-            </Item>
-          </ItemDiv>
-
-          <ItemDiv>
-            <Item>
-              <div>초미세먼지</div>
-              <div>{`${Math.floor(airPollution.pm2_5)}㎍/㎥`}</div>
-            </Item>
-          </ItemDiv>
-        </>
-      ) : (
-        <LoadingIcon size={50}></LoadingIcon>
-      )} */}
     </Div>
   );
 };
@@ -230,10 +160,19 @@ const Div = styled.div`
 
   border-radius: 30px;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ItemBox = styled.div`
+  width: 100%;
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, minmax(100px, auto));
 
+  border-radius: inherit;
   padding: 10px;
   gap: 10px 10px;
 `;
@@ -259,7 +198,7 @@ const Item = styled.div`
   gap: 5px 0px;
 
   & > :last-child {
-    color: gray;
+    color: #525252;
   }
 `;
 
