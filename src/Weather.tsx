@@ -6,12 +6,7 @@ import Header from "./WeatherPage/Header";
 import WeekForecast from "./WeatherPage/WeekForecast";
 import WeatherChart from "./WeatherPage/WeatherChart";
 import InfoBox from "./WeatherPage/InfoBox";
-import Comment from "./WeatherPage/Comment";
-import Map from "./WeatherPage/Map";
-import TodayStory from "./WeatherPage/TodayStory";
-import Video from "./WeatherPage/Video";
-import MenuBox from "./WeatherPage/MenuBox";
-
+import ErrorPage from "./WeatherPage/ErrorPage";
 import LoadingIcon from "./LoadingIcon";
 
 import bgImg from "./Image/background_img.jpg";
@@ -24,6 +19,8 @@ const Weather = () => {
   const [airPollution, setAirPollution] = useState<any>();
   const [weatherForecastWeek, setWeatherForcastWeek] = useState<any>();
   const [weatherForecastHour, setWeatherForcastHour] = useState<any>();
+  const [currPosLoading, setCurrPosLoading] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onApi = () => {
     navigator.geolocation.getCurrentPosition(async function (pos) {
@@ -55,6 +52,7 @@ const Weather = () => {
 
   useEffect(() => {
     const getApi = () => {
+      setCurrPosLoading(true);
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           async (pos) => {
@@ -85,16 +83,41 @@ const Weather = () => {
             setWeatherForcastHour(weatherForecastHour.data);
           },
           (err) => {
-            console.log(err.code);
+            console.log(err);
             // 0 > 알 수 없는 오류
             // 1 > 권한 거부
             // 2 > 추적 실패
             // 3 > 시간 초과
+            setErrorMessage(err.message);
+
+            switch (err.code) {
+              case 0:
+                console.log("알 수 없는 오류");
+                setErrorMessage("알 수 없는 오류가 발생했습니다.");
+                break;
+
+              case 1:
+                console.log("권한 거부");
+                setErrorMessage("위치 권한을 허용해 주세요.");
+                break;
+
+              case 2:
+                console.log("추적 실패");
+                setErrorMessage("위치 추적에 실패했습니다.");
+                break;
+
+              case 3:
+                console.log("시간 초과");
+                setErrorMessage("위치 추적 시간을 초과했습니다.");
+                break;
+
+              default:
+                setErrorMessage("위치 정보를 지원하지 않습니다.");
+            }
           }
         );
-      } else {
-        console.log("not support");
       }
+      setCurrPosLoading(false);
     };
 
     getApi();
@@ -131,11 +154,23 @@ const Weather = () => {
 
   return (
     <Div>
-      {/* <Refresh onClick={onRefresh}></Refresh> */}
-      <Header weatherInfo={weatherInfo} />
-      <WeekForecast forecastWeek={weatherForecastWeek} />
-      <WeatherChart forecastHour={weatherForecastHour} />
-      <InfoBox weatherInfo={weatherInfo} airPollution={airPollution}></InfoBox>
+      {currPosLoading ? (
+        <></>
+      ) : (
+        <>
+          {errorMessage ? (
+            <ErrorPage errorMessage={errorMessage} />
+          ) : (
+            <WeatherDiv>
+              {/* <Refresh onClick={onRefresh}></Refresh> */}
+              <Header weatherInfo={weatherInfo} />
+              <WeekForecast forecastWeek={weatherForecastWeek} />
+              <WeatherChart forecastHour={weatherForecastHour} />
+              <InfoBox weatherInfo={weatherInfo} airPollution={airPollution} />
+            </WeatherDiv>
+          )}
+        </>
+      )}
     </Div>
   );
 };
@@ -148,14 +183,18 @@ const Refresh = styled.div`
 
 const Div = styled.div`
   width: 100vw;
-  min-height: 100vh;
-  /* background-color: #f14f4f79; */
+  height: 100vh;
 
   background-image: ${() => `url(${bgImg})`};
   background-size: cover;
   background-position: right;
   background-repeat: no-repeat;
 
+  overflow-y: scroll;
+`;
+
+const WeatherDiv = styled.div`
+  width: 100%;
   padding: 15px;
 
   display: flex;
@@ -164,9 +203,6 @@ const Div = styled.div`
 
   position: relative;
   margin: auto 0;
-
-  /* overflow-y: scroll; */
-  overflow-x: scroll;
 `;
 
 export default React.memo(Weather);
