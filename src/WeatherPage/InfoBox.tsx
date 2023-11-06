@@ -156,25 +156,36 @@ const Div = styled.div`
   backdrop-filter: blur(10px);
   border: 1px solid gray;
   width: 100%;
-  height: 600px;
+  height: 33%;
 
   border-radius: 30px;
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 700px) {
+    min-height: 600px;
+  }
 `;
 
 const ItemBox = styled.div`
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, minmax(100px, auto));
+
+  display: flex;
+
+
 
   border-radius: inherit;
   padding: 10px;
   gap: 10px 10px;
+
+  @media (max-width: 700px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, minmax(100px, auto));
+  }
 `;
 
 const ItemDiv = styled.div`

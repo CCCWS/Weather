@@ -163,9 +163,12 @@ const Weather = () => {
           ) : (
             <WeatherDiv>
               {/* <Refresh onClick={onRefresh}></Refresh> */}
-              <Header weatherInfo={weatherInfo} />
+              <div>
+                <Header weatherInfo={weatherInfo} />
+                <WeatherChart forecastHour={weatherForecastHour} />
+              </div>
+
               <WeekForecast forecastWeek={weatherForecastWeek} />
-              <WeatherChart forecastHour={weatherForecastHour} />
               <InfoBox weatherInfo={weatherInfo} airPollution={airPollution} />
             </WeatherDiv>
           )}
@@ -190,11 +193,17 @@ const Div = styled.div`
   background-position: right;
   background-repeat: no-repeat;
 
+  display: flex;
+  justify-content: center;
+
   overflow-y: scroll;
 `;
 
 const WeatherDiv = styled.div`
   width: 100%;
+  height: 100%;
+
+  overflow: scroll;
   padding: 15px;
 
   display: flex;
@@ -203,6 +212,25 @@ const WeatherDiv = styled.div`
 
   position: relative;
   margin: auto 0;
+
+  & > :first-child {
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+    gap: 0px 15px;
+  }
+
+  @media (max-width: 700px) {
+    & > :first-child {
+      height: 100%;
+      flex-direction: column;
+      gap: 15px 0px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    width: 1200px;
+  }
 `;
 
 export default React.memo(Weather);

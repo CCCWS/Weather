@@ -27,7 +27,10 @@ const Header = ({ weatherInfo }: HeaderProps) => {
                 <div>{weatherInfo.name}</div>
                 <div>{`${Math.floor(weatherInfo.main.temp_max)}° / ${Math.floor(
                   weatherInfo.main.temp_min
-                )}° 체감온도 ${Math.floor(weatherInfo.main.feels_like)}°`}</div>
+                )}°`}</div>
+                <div>
+                  {`체감온도 ${Math.floor(weatherInfo.main.feels_like)}°`}
+                </div>
               </Bottom>
             </Info>
             <Img
@@ -60,8 +63,8 @@ const Header = ({ weatherInfo }: HeaderProps) => {
 };
 
 const HeaderDiv = styled.div`
-  width: 100%;
-  height: 250px;
+  width: 30%;
+  height: 100%;
   border-radius: 30px;
   overflow: hidden;
 
@@ -70,10 +73,15 @@ const HeaderDiv = styled.div`
   align-items: center;
   backdrop-filter: blur(10px);
   border: 1px solid gray;
+
+  @media (max-width: 700px) {
+    min-height: 250px;
+    width: 100%;
+  }
 `;
 
 const Info = styled.div`
-  width: 50%;
+  width: 60%;
   height: 100%;
 
   padding: 30px;
@@ -101,7 +109,7 @@ const Bottom = styled(InfoDiv)`
 `;
 
 const Img = styled.div<{ url: string }>`
-  width: 50%;
+  width: 40%;
   height: 100%;
 
   background: ${(props) => `url(${props.url})`};

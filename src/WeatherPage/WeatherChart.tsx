@@ -101,8 +101,8 @@ const WeatherChart = ({ forecastHour }: ChartType) => {
 };
 
 const Chart = styled.div`
-  width: 100%;
-  height: 250px;
+  width: 70%;
+  height: 100%;
   /* background-color: #8b8b8b42; */
   backdrop-filter: blur(10px);
   border: 1px solid gray;
@@ -118,6 +118,11 @@ const Chart = styled.div`
   align-items: center;
 
   /* padding: 15px; */
+
+  @media (max-width: 700px) {
+    min-height: 250px;
+    width: 100%;
+  }
 `;
 
 const Div = styled.div`
