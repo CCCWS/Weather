@@ -111,7 +111,7 @@ const Item = styled.div<{
   /* transition: ${(props) => (props.curr_page_check ? "0.5s" : "0s")}; */
   /* position: absolute; */
   /* opacity: ${(props) => (props.curr_page_check ? 1 : 0)}; */
-  /* z-index: ${(props) => (props.curr_page_check ? 1 : 0)}; */
+  /* z-index: ${(props) => (props.curr_page_check ? 1 : 0)};  */
 
   color: white;
 `;

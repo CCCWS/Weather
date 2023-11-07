@@ -9,6 +9,9 @@ import InfoBox from "./WeatherPage/InfoBox";
 import ErrorPage from "./WeatherPage/ErrorPage";
 import LoadingIcon from "./LoadingIcon";
 
+import Test from "./WeatherPage/Test";
+import Ttest from "./WeatherPage/Ttest";
+
 import bgImg from "./Image/background_img.jpg";
 
 const API_KEY = "b5ca0b1f1b1ff2ccea56184d385df768";
@@ -120,7 +123,7 @@ const Weather = () => {
       setCurrPosLoading(false);
     };
 
-    getApi();
+    // getApi();
   }, []);
 
   useEffect(() => {
@@ -155,7 +158,7 @@ const Weather = () => {
   return (
     <Div>
       {currPosLoading ? (
-        <></>
+        <Ttest></Ttest>
       ) : (
         <>
           {errorMessage ? (
