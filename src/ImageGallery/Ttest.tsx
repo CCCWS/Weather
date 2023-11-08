@@ -1,29 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
+import ImageItem from "./ImageItem";
+
 import { dataType, data } from "./Data";
-import "./Ttest.css";
 
 const Ttest = () => {
   const [currLocation, setCurrLoaction] = useState<number>(0);
-  const [test, setTest] = useState<number | null>(null);
+  const [mouseOver, setMouseOver] = useState<number | null>(null);
 
   return (
     <Div>
-      <ImageBox>
-        {data.map((data, index) => (
-          <React.Fragment key={index}>
-            {data.bgVideo && (
-              <Video muted autoPlay loop is_view={currLocation === index}>
-                <source src={data.bgVideo} type="video/mp4" />
-              </Video>
-            )}
+      <ImageBox curr_location={currLocation}>
+        <div>
+          {data.map((data, index) => (
+            // <React.Fragment key={index}>
+            //   {data.bgVideo && (
+            //     <Video muted autoPlay loop $is_view={isView} ref={imgRef}>
+            //       <source src={data.bgVideo} type="video/mp4" />
+            //     </Video>
+            //   )}
 
-            {data.bgImg && (
-              <ImageItem url={data.bgImg} is_view={currLocation === index} />
-            )}
-          </React.Fragment>
-        ))}
+            //   {data.bgImg && (
+            //     <ImageItem url={data.bgImg} is_view={isView} ref={imgRef} />
+            //   )}
+            // </React.Fragment>
+            <ImageItem
+              key={index}
+              data={data}
+              currItem={currLocation === index}
+            />
+          ))}
+        </div>
       </ImageBox>
 
       <ImageBtnBox>
@@ -35,10 +43,10 @@ const Ttest = () => {
               className="imageBtn"
               onClick={() => setCurrLoaction(index)}
               $curr_lcation={currLocation === index}
-              $mouse_over={test === index}
-              $check_over={test === null}
-              onMouseOver={() => setTest(index)}
-              onMouseLeave={() => setTest(null)}
+              $mouse_over={mouseOver === index}
+              $check_over={mouseOver === null}
+              onMouseOver={() => setMouseOver(index)}
+              onMouseLeave={() => setMouseOver(null)}
             >
               <div></div>
             </ImageBtn>
@@ -51,7 +59,7 @@ const Ttest = () => {
 
 const Div = styled.div`
   width: 100%;
-  height: 700px;
+  height: 100%;
 
   background-color: black;
 
@@ -59,40 +67,20 @@ const Div = styled.div`
   grid-template-rows: 4fr 1fr;
 `;
 
-const ImageBox = styled.div`
+const ImageBox = styled.div<{ curr_location: number }>`
   width: 100%;
   height: 100%;
   background-color: black;
 
   position: relative;
-`;
+  overflow: scroll;
 
-const Video = styled.video<{ is_view: boolean }>`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-
-  transition: 0.5s;
-  opacity: ${(props) => (props.is_view ? 1 : 0)};
-
-  position: absolute;
-  top: 0;
-`;
-
-const ImageItem = styled.div<{ url: string; is_view: boolean }>`
-  width: 100%;
-  height: 100%;
-
-  background-image: ${(props) => `url(${props.url})`};
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  transition: 0.5s;
-  opacity: ${(props) => (props.is_view ? 1 : 0)};
-
-  position: absolute;
-  top: 0;
+  & > :first-child {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transform: ${(props) => `translateX(-${props.curr_location}00%)`};
+  }
 `;
 
 //////////////////////////////////////////////////

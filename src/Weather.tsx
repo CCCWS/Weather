@@ -10,9 +10,10 @@ import ErrorPage from "./WeatherPage/ErrorPage";
 import LoadingIcon from "./LoadingIcon";
 
 import Test from "./WeatherPage/Test";
-import Ttest from "./WeatherPage/Ttest";
+import Ttest from "./ImageGallery/Ttest";
 
 import bgImg from "./Image/background_img.jpg";
+import Test_2 from "./ImageGallery/Test_2";
 
 const API_KEY = "b5ca0b1f1b1ff2ccea56184d385df768";
 const WEATHER_URL = "https://api.openweathermap.org/data/2.5/";
@@ -160,6 +161,7 @@ const Weather = () => {
       {currPosLoading ? (
         <Ttest></Ttest>
       ) : (
+        // <Test_2 />
         <>
           {errorMessage ? (
             <ErrorPage errorMessage={errorMessage} />
