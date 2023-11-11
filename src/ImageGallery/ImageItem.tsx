@@ -106,7 +106,7 @@ const Title = styled.div`
   width: 100%;
   height: 100%;
 
-  padding: 100px;
+  padding: 80px;
 
   position: absolute;
   top: 0;
@@ -159,7 +159,7 @@ const ImgBtn = styled.button`
     content: "";
     width: 130%;
     height: 130%;
-    background-color: gray;
+    /* background-color: gray; */
 
     position: absolute;
     top: 50%;
