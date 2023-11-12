@@ -13,8 +13,6 @@ const ImageItem = ({ data, currItem }: imageItemProps) => {
   const itemRef = useRef<any>(null);
   const { isView } = useObserver(itemRef, 1);
 
-  console.log(currItem);
-
   return (
     <Div>
       {data.bgVideo && (
@@ -113,18 +111,26 @@ const Title = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  align-items: flex-start;
+  justify-content: center;
   gap: 20px 0px;
+
+  @media (max-width: 1024px) {
+    justify-content: flex-end;
+    align-items: center;
+  }
 `;
 
 const TitleImg = styled.div<{ url?: string; $curr_view: boolean }>`
-  /* width: auto; */
+  width: 200px;
   height: 150px;
 
   background-image: ${(props) => `url(${props.url})`};
-  background-position: center;
+  background-position: left;
   background-repeat: no-repeat;
   background-size: contain;
+
+  /* background-color: red; */
 
   transition: 1.7s;
   transform: ${(props) =>
@@ -134,9 +140,11 @@ const TitleImg = styled.div<{ url?: string; $curr_view: boolean }>`
 const TitleDescription = styled.div<{ $curr_view: boolean }>`
   color: white;
 
+  width: 30%;
+
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 
   gap: 20px 0px;
 
@@ -144,6 +152,11 @@ const TitleDescription = styled.div<{ $curr_view: boolean }>`
   transform: ${(props) =>
     props.$curr_view ? "translateY(0px)" : "translateY(30px)"};
   opacity: ${(props) => (props.$curr_view ? 1 : 0)};
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    align-items: center;
+  }
 `;
 
 const ImgBtn = styled.button`
@@ -152,20 +165,29 @@ const ImgBtn = styled.button`
   background-color: white;
 
   border-radius: 50px;
-  border: 2px solid black;
+  border: 3px solid black;
   position: relative;
 
   &::before {
     content: "";
-    width: 130%;
-    height: 130%;
-    /* background-color: gray; */
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    border-radius: inherit;
+    background-color: #f1f1f1;
 
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: -1;
+    opacity: 0;
+  }
+
+  &:hover {
+    &::before {
+      opacity: 1;
+    }
+    background-color: #f1f1f1;
   }
 `;
 

@@ -2,69 +2,76 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
 import ImageItem from "./ImageItem";
+import Test2 from "./Test_2";
 
 import { dataType, data } from "./Data";
+import Header from "./Header";
 
 const Ttest = () => {
   const [currLocation, setCurrLoaction] = useState<number>(0);
   const [mouseOver, setMouseOver] = useState<number | null>(null);
 
+  console.log("test");
+
   return (
-    <Div>
-      <ImageBox curr_location={currLocation}>
-        <div>
-          {data.map((data, index) => (
-            // <React.Fragment key={index}>
-            //   {data.bgVideo && (
-            //     <Video muted autoPlay loop $is_view={isView} ref={imgRef}>
-            //       <source src={data.bgVideo} type="video/mp4" />
-            //     </Video>
-            //   )}
+    <>
+      <Div>
+        <Header />
+        <ImageBoxDiv>
+          <ImageBox curr_location={currLocation}>
+            <div>
+              {data.map((data, index) => (
+                <ImageItem
+                  key={index}
+                  data={data}
+                  currItem={currLocation === index}
+                />
+              ))}
+            </div>
+          </ImageBox>
 
-            //   {data.bgImg && (
-            //     <ImageItem url={data.bgImg} is_view={isView} ref={imgRef} />
-            //   )}
-            // </React.Fragment>
-            <ImageItem
-              key={index}
-              data={data}
-              currItem={currLocation === index}
-            />
-          ))}
-        </div>
-      </ImageBox>
+          <ImageBtnBox>
+            <div>
+              {data.map((data, index) => (
+                <ImageBtn
+                  key={index}
+                  url={data.miniBgImg}
+                  onClick={() => setCurrLoaction(index)}
+                  $curr_lcation={currLocation === index}
+                  $mouse_over={mouseOver === index}
+                  $check_over={mouseOver === null}
+                  onMouseOver={() => setMouseOver(index)}
+                  onMouseLeave={() => setMouseOver(null)}
+                >
+                  <div></div>
+                </ImageBtn>
+              ))}
+            </div>
+          </ImageBtnBox>
+        </ImageBoxDiv>
 
-      <ImageBtnBox>
-        <div className="imageBtnBox">
-          {data.map((data, index) => (
-            <ImageBtn
-              key={index}
-              url={data.miniBgImg}
-              className="imageBtn"
-              onClick={() => setCurrLoaction(index)}
-              $curr_lcation={currLocation === index}
-              $mouse_over={mouseOver === index}
-              $check_over={mouseOver === null}
-              onMouseOver={() => setMouseOver(index)}
-              onMouseLeave={() => setMouseOver(null)}
-            >
-              <div></div>
-            </ImageBtn>
-          ))}
-        </div>
-      </ImageBtnBox>
-    </Div>
+        <Test2 />
+      </Div>
+    </>
   );
 };
 
 const Div = styled.div`
   width: 100%;
-  height: 100%;
-
+  height: 400vh;
   background-color: black;
+  /* overflow: scroll; */
+  position: relative;
+`;
 
+const ImageBoxDiv = styled.div`
+  height: 60vh;
   display: grid;
   grid-template-rows: 4fr 1fr;
+
+  @media (max-width: 1024px) {
+    height: 100vh;
+  }
 `;
 
 const ImageBox = styled.div<{ curr_location: number }>`
@@ -101,7 +108,7 @@ const ImageBtn = styled.button<{
   $mouse_over: boolean;
   $check_over: boolean;
 }>`
-  width: 150px;
+  width: 100px;
   height: 80px;
 
   transition: 0.3s;
