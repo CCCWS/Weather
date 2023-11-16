@@ -124,7 +124,7 @@ const Weather = () => {
       setCurrPosLoading(false);
     };
 
-    // getApi();
+    getApi();
   }, []);
 
   useEffect(() => {
