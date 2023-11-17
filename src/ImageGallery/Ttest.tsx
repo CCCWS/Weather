@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import ImageItem from "./ImageItem";
 import Test2 from "./Test_2";
+import Test3 from "./Test_3";
 
 import { dataType, data } from "./Data";
 import Header from "./Header";
@@ -51,6 +52,7 @@ const Ttest = () => {
         </ImageBoxDiv>
 
         <Test2 />
+        <Test3 />
       </Div>
     </>
   );
