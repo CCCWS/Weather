@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 const Test_3 = () => {
+  useEffect(() => {
+    const word = "aabbaccc";
+
+    const compression = (word: any) => {
+      const wordArr = [...word];
+
+      console.log(wordArr);
+
+      for (let i = 0; i <= word.length / 2 - 1; i++) {
+        
+      }
+    };
+
+    compression(word);
+  }, []);
   return (
     <Box>
       <Div1></Div1>

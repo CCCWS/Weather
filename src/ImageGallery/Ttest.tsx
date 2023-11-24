@@ -12,7 +12,6 @@ const Ttest = () => {
   const [currLocation, setCurrLoaction] = useState<number>(0);
   const [mouseOver, setMouseOver] = useState<number | null>(null);
 
-  console.log("test");
 
   return (
     <>
