@@ -97,8 +97,6 @@ const Test_3 = () => {
     };
 
     const infomation = (today: any, terms: any, privacies: any) => {
-      // console.log(new Date(today).getFullYear());
-
       const newTerms = [];
       const answer = [];
 
@@ -106,30 +104,54 @@ const Test_3 = () => {
         newTerms.push(i.split(" "));
       }
 
-      for (let i of privacies) {
-        const tempPerivacies = i.split(" ");
+      for (let i in privacies) {
+        const tempPerivacies = privacies[i].split(" ");
         let term = 0;
 
         newTerms.forEach((i) => {
           if (i[0] === tempPerivacies[1]) term = parseInt(i[1], 10);
         });
 
-        const calcDate = new Date(tempPerivacies[0]).getMonth() + 1 + term;
+        const calcMonth = new Date(tempPerivacies[0]).getMonth() + 1 + term;
 
-        if (calcDate > 12) {
-          // console.log(calcDate);
-        } else {
+        let date = new Date(tempPerivacies[0]);
+        let year = date.getFullYear();
+        let month: any = calcMonth;
+        let day: any = date.getDate();
+
+        if (calcMonth > 12) {
+          if (month % 12 === 0) {
+            year += Math.floor(month / 12) - 1;
+            month = 12;
+          } else {
+            year += Math.floor(month / 12);
+            month = month % 12;
+          }
         }
+
+        if (month < 10) {
+          month = String(month).padStart(2, "0");
+        }
+
+        if (day < 10) {
+          day = String(day).padStart(2, "0");
+        }
+
+        if (
+          today > `${year}.${month}.${day}` ||
+          today === `${year}.${month}.${day}`
+        ) {
+          answer.push(parseInt(i, 10) + 1);
+        }
+        console.log(`${today} / ${year}.${month}.${day}`);
       }
+      console.log(answer);
+      return answer;
     };
 
     // compression(word);
     // keyPad([1, 2, 3, 4, 5, 6, 7, 8, 9, 0], "right");
-    infomation(
-      "2022.05.19",
-      ["A 6", "B 12", "C 3"],
-      ["2021.05.02 A", "2021.07.01 B", "2022.02.19 C", "2022.02.20 C"]
-    );
+    infomation("2009.12.31", ["A 13"], ["2008.11.03 A"]);
   }, []);
   return <></>;
 };
