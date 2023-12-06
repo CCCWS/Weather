@@ -147,8 +147,6 @@ const Weather = () => {
         minute: "numeric",
         hour12: true,
       });
-
-      // console.log(test);
     }
   }, [weatherInfo]);
 

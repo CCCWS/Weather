@@ -3,15 +3,14 @@ import styled from "styled-components";
 
 import ImageItem from "./ImageItem";
 import Test2 from "./Test_2";
-import Test3 from "./Test_3";
 
 import { dataType, data } from "./Data";
 import Header from "./Header";
+import Test_3 from "./Test_3";
 
 const Ttest = () => {
   const [currLocation, setCurrLoaction] = useState<number>(0);
   const [mouseOver, setMouseOver] = useState<number | null>(null);
-
 
   return (
     <>
@@ -51,7 +50,9 @@ const Ttest = () => {
         </ImageBoxDiv>
 
         <Test2 />
-        <Test3 />
+        <Test_3 width="100px" height="100px">
+          <div>424</div>
+        </Test_3>
       </Div>
     </>
   );
