@@ -50,9 +50,7 @@ const Ttest = () => {
         </ImageBoxDiv>
 
         <Test2 />
-        <Test_3 width="100px" height="100px">
-          <div>424</div>
-        </Test_3>
+        <Test_3 />
       </Div>
     </>
   );
