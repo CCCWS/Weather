@@ -8,6 +8,7 @@ import { dataType, data } from "./Data";
 import Header from "./Header";
 import Test_3 from "./Test_3";
 import TTTest from "./TTTest";
+import TTTTest from "./TTTTest";
 
 const Ttest = () => {
   const [currLocation, setCurrLoaction] = useState<number>(0);
@@ -53,6 +54,7 @@ const Ttest = () => {
         <Test2 />
         <Test_3 />
         <TTTest />
+        <TTTTest />
       </Div>
     </>
   );

@@ -42,6 +42,7 @@ const Box = styled.div`
   width: 50px;
   height: 300px;
   background-color: #525252;
+  box-shadow: 0px 0px 5px 3px #525252;
   border-radius: 50px;
   overflow: hidden;
 `;
