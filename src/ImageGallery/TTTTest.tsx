@@ -65,8 +65,9 @@ const Div = styled.div`
     height: 100%;
     position: absolute;
     top: 0;
+    border-radius: 20px;
 
-    background-image: url("https://sb.kaleidousercontent.com/67418/658x756/361846cee7/all-pages-2.png");
+    background-image: url("");
 
     background-position: center;
     background-size: cover;

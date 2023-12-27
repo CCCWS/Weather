@@ -9,6 +9,7 @@ import Header from "./Header";
 import Test_3 from "./Test_3";
 import TTTest from "./TTTest";
 import TTTTest from "./TTTTest";
+import Test4 from "./Test4";
 
 const Ttest = () => {
   const [currLocation, setCurrLoaction] = useState<number>(0);
@@ -55,10 +56,19 @@ const Ttest = () => {
         <Test_3 />
         <TTTest />
         <TTTTest />
+        <Test4 perspective={1000}>
+          <Card>TESTESTSET</Card>
+        </Test4>
       </Div>
     </>
   );
 };
+
+const Card = styled.div`
+  width: 300px;
+  height: 300px;
+  background-color: red;
+`;
 
 const Div = styled.div`
   width: 100%;
