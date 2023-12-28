@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -7,13 +7,8 @@ import WeekForecast from "./WeatherPage/WeekForecast";
 import WeatherChart from "./WeatherPage/WeatherChart";
 import InfoBox from "./WeatherPage/InfoBox";
 import ErrorPage from "./WeatherPage/ErrorPage";
-import LoadingIcon from "./LoadingIcon";
-
-import Test from "./WeatherPage/Test";
-import Ttest from "./ImageGallery/Ttest";
 
 import bgImg from "./Image/background_img.jpg";
-import Test_2 from "./ImageGallery/Test_2";
 
 const API_KEY = "b5ca0b1f1b1ff2ccea56184d385df768";
 const WEATHER_URL = "https://api.openweathermap.org/data/2.5/";
@@ -23,7 +18,6 @@ const Weather = () => {
   const [airPollution, setAirPollution] = useState<any>();
   const [weatherForecastWeek, setWeatherForcastWeek] = useState<any>();
   const [weatherForecastHour, setWeatherForcastHour] = useState<any>();
-  const [currPosLoading, setCurrPosLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onApi = () => {
@@ -56,7 +50,6 @@ const Weather = () => {
 
   useEffect(() => {
     const getApi = () => {
-      setCurrPosLoading(true);
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           async (pos) => {
@@ -121,10 +114,9 @@ const Weather = () => {
           }
         );
       }
-      setCurrPosLoading(false);
     };
 
-    // getApi();
+    getApi();
   }, []);
 
   useEffect(() => {
@@ -156,36 +148,24 @@ const Weather = () => {
 
   return (
     <Div>
-      {currPosLoading ? (
-        <Ttest></Ttest>
-      ) : (
-        // <Test_2 />
-        <>
-          {errorMessage ? (
-            <ErrorPage errorMessage={errorMessage} />
-          ) : (
-            <WeatherDiv>
-              {/* <Refresh onClick={onRefresh}></Refresh> */}
-              <div>
-                <Header weatherInfo={weatherInfo} />
-                <WeatherChart forecastHour={weatherForecastHour} />
-              </div>
+      <>
+        {errorMessage ? (
+          <ErrorPage errorMessage={errorMessage} />
+        ) : (
+          <WeatherDiv>
+            <div>
+              <Header weatherInfo={weatherInfo} />
+              <WeatherChart forecastHour={weatherForecastHour} />
+            </div>
 
-              <WeekForecast forecastWeek={weatherForecastWeek} />
-              <InfoBox weatherInfo={weatherInfo} airPollution={airPollution} />
-            </WeatherDiv>
-          )}
-        </>
-      )}
+            <WeekForecast forecastWeek={weatherForecastWeek} />
+            <InfoBox weatherInfo={weatherInfo} airPollution={airPollution} />
+          </WeatherDiv>
+        )}
+      </>
     </Div>
   );
 };
-
-const Refresh = styled.div`
-  width: 100%;
-  height: 200px;
-  background-color: black;
-`;
 
 const Div = styled.div`
   width: 100vw;

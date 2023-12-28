@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import LoadingIcon from "../LoadingIcon";
 
@@ -8,12 +8,10 @@ interface WeekForecastProps {
 }
 
 const WeekForecast = ({ forecastWeek }: WeekForecastProps) => {
-  // console.log(forecastWeek);
-
   const timezone_offset = 32400;
 
   return (
-    <Div>
+    <Div $lodingCheck={forecastWeek ? false : true}>
       {forecastWeek ? (
         <>
           {forecastWeek.daily.map((data: any, index: number) => (
@@ -27,8 +25,10 @@ const WeekForecast = ({ forecastWeek }: WeekForecastProps) => {
                 })}
               </Day>
 
-              <Humidity ratio={data.humidity}>
-                <div></div>
+              <Humidity>
+                <HumidityBar ratio={data.humidity}>
+                  <div />
+                </HumidityBar>
                 <div>{`${data.humidity}%`}</div>
               </Humidity>
 
@@ -48,7 +48,7 @@ const WeekForecast = ({ forecastWeek }: WeekForecastProps) => {
   );
 };
 
-const Div = styled.div`
+const Div = styled.div<{ $lodingCheck: boolean }>`
   backdrop-filter: blur(10px);
   border: 1px solid gray;
 
@@ -57,30 +57,33 @@ const Div = styled.div`
 
   border-radius: 30px;
 
-  /* display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center; */
+  ${(props) =>
+    props.$lodingCheck
+      ? css`
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+        `
+      : css`
+          display: grid;
+          grid-template-columns: repeat(8, 1fr);
+          grid-template-rows: repeat(1, 1fr);
 
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(1, 1fr);
+          overflow: hidden;
 
-  overflow: hidden;
-
-  @media (max-width: 700px) {
-    min-height: 800px;
-    grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-  }
+          @media (max-width: 700px) {
+            min-height: 800px;
+            grid-template-columns: repeat(1, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+          }
+        `};
 `;
 
 const WeatherList = styled.div`
   width: 100%;
   height: 100%;
   padding: 20px;
-
-  /* background-color: red; */
 
   display: flex;
   align-items: center;
@@ -109,13 +112,11 @@ const Day = styled.div`
   }
 `;
 
-const Humidity = styled.div<{ ratio: number }>`
+const Humidity = styled.div`
   color: gray;
   position: relative;
   width: 100%;
   height: 30px;
-
-  /* background-color: blue; */
 
   display: flex;
   flex-direction: column-reverse;
@@ -128,49 +129,37 @@ const Humidity = styled.div<{ ratio: number }>`
     height: 100%;
     flex-direction: row;
   }
+`;
+
+const HumidityBar = styled.div<{ ratio: number }>`
+  width: 100%;
+  height: 10px;
+  background-color: gray;
+  border-radius: 10px;
+  border: 1px solid gray;
+  overflow: hidden;
+
+  position: relative;
 
   & > :first-child {
-    width: 100%;
-    height: 20px;
+    width: ${(props) => `${props.ratio}%`};
+    height: 100%;
+    background-color: #56c1ff;
+  }
 
-    position: relative;
+  @media (max-width: 700px) {
+    width: 10px;
+    height: 100%;
+    margin-right: 5px;
+    flex-direction: row;
 
-    &::before {
-      content: "";
+    display: flex;
+    align-items: flex-end;
+
+    & > :first-child {
       width: 100%;
-      height: 100%;
-      background-color: #e2f3fd;
-      border: 1px solid gray;
-      position: absolute;
-      left: 0;
-      border-radius: 10px;
-    }
-
-    &::after {
-      content: "";
-      width: ${(props) => `${props.ratio}%`};
-      height: 100%;
+      height: ${(props) => `${props.ratio}%`};
       background-color: #56c1ff;
-      position: absolute;
-      left: 1px;
-      bottom: -1px;
-      overflow: hidden;
-      border-radius: 10px 0px 0px 10px;
-    }
-
-    @media (max-width: 700px) {
-      width: 15%;
-      height: 60%;
-
-      &::before {
-        width: 7px;
-      }
-
-      &::after {
-        width: 7px;
-        height: ${(props) => `${props.ratio}%`};
-        border-radius: 0px 0px 10px 10px;
-      }
     }
   }
 `;
